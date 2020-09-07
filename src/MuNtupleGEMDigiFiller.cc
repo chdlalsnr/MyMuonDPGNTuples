@@ -11,7 +11,7 @@ MuNtupleGEMDigiFiller::MuNtupleGEMDigiFiller(edm::ConsumesCollector && collector
   MuNtupleBaseFiller(config, tree, label)
 {
 
-  edm::InputTag & iTag = m_config->m_inputTags["DigiTag"];
+  edm::InputTag & iTag = m_config->m_inputTags["gemDigiTag"];
 if (iTag.label() != "none") m_gemDigiToken = collector.consumes<GEMDigiCollection>(iTag);
 
 }
@@ -35,6 +35,7 @@ void MuNtupleGEMDigiFiller::initialize()
 
   m_tree->Branch((m_label + "_g_r").c_str(), &m_digi_g_r);
   m_tree->Branch((m_label + "_g_phi").c_str(), &m_digi_g_phi);
+  m_tree->Branch((m_label + "g_eta").c_str(), &m_digi_g_eta);
   m_tree->Branch((m_label + "_g_x").c_str(), &m_digi_g_x);
   m_tree->Branch((m_label + "_g_y").c_str(), &m_digi_g_y);
   m_tree->Branch((m_label + "_g_z").c_str(), &m_digi_g_z);
@@ -56,6 +57,7 @@ void MuNtupleGEMDigiFiller::clear()
 
   m_digi_g_r.clear();
   m_digi_g_phi.clear();
+  m_digi_g_eta.clear();
   m_digi_g_x.clear();
   m_digi_g_y.clear();
   m_digi_g_z.clear();
@@ -100,24 +102,20 @@ void MuNtupleGEMDigiFiller::fill(const edm::Event & ev)
 	    const LocalPoint& local_pos = roll->centreOfStrip(digi->strip());
 	    const GlobalPoint& global_pos = surface.toGlobal(local_pos);
 
-	    //Float_t g_r = 
 	    m_digi_g_r.push_back(global_pos.perp());
-	    //Float_t g_phi =
 	    m_digi_g_phi.push_back(global_pos.phi());
-	    //Float_t g_x =
+	    m_digi_g_eta.push_back(global_pos.eta());
 	    m_digi_g_x.push_back(global_pos.x());
-	    //Float_t g_y =
 	    m_digi_g_y.push_back(global_pos.y());
-	    //Float_t g_abs_z = 
-	    m_digi_g_z.push_back(std::fabs(global_pos.z()));
+	    m_digi_g_z.push_back(global_pos.z());
 	    
 	    m_nDigis++;
-	    //std::cout << "perp=" << g_r << " phi=" << g_phi << " x=" << g_x << " y=" << g_y << " z=" << g_abs_z << std::endl;
+	   
 
 	  }
-	  //std:cout << m_nDigis << std::endl;
+
 	}
-      std::cout << m_nDigis << std::endl;
+      
     }
 
   

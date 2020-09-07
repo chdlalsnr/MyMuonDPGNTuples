@@ -27,7 +27,7 @@
 #include "MuDPGAnalysis/MuonDPGNtuples/src/MuNtupleDTDigiFiller.h"
 #include "MuDPGAnalysis/MuonDPGNtuples/src/MuNtupleDTSegmentFiller.h"
 #include "MuDPGAnalysis/MuonDPGNtuples/src/MuNtupleGEMDigiFiller.h"
-
+#include "MuDPGAnalysis/MuonDPGNtuples/src/MuNtupleGEMRecHitFiller.h"
 
 #include <iostream>
 
@@ -48,6 +48,7 @@ MuNtupleProducer::MuNtupleProducer( const edm::ParameterSet & config )
   
   m_fillers.push_back(std::make_unique<MuNtupleGEMDigiFiller>(consumesCollector(), m_config, m_tree, "gemDigi"));
   
+  m_fillers.push_back(std::make_unique<MuNtupleGEMRecHitFiller>(consumesCollector(), m_config, m_tree, "gemRecHit"));
 
 }
 

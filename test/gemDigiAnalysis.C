@@ -1,12 +1,12 @@
-#define gemDigiAnalysis_cxx
+//#define gemDigiAnalysis_cxx
 #include "gemDigiAnalysis.h"
 #include <TH2.h>
 #include <TStyle.h>
-#include <TCanvas.h> 
-#include <iostream>
+#include <TCanvas.h>
+//#include <iostream.h>
 
 gemDigiAnalysis::gemDigiAnalysis(const TString & inFileName,
-				 const TString & outFileName) :
+                                 const TString & outFileName) :
   m_inFile(inFileName,"READ"),m_outFile(outFileName,"RECREATE"),fChain(0)
 {
 
@@ -41,59 +41,66 @@ void gemDigiAnalysis::Loop()
 // METHOD2: replace line
 //    fChain->GetEntry(jentry);       //read all branches
 //by  b_branchname->GetEntry(ientry); //read only this branch
-  
-   book();
-   
    if (fChain == 0) return;
-   Long64_t nentries = fChain->GetEntriesFast();
 
+   book();
+   Long64_t nentries = fChain->GetEntriesFast();
+   
    Long64_t nbytes = 0, nb = 0;
    for (Long64_t jentry=0; jentry<nentries;jentry++) {
       Long64_t ientry = LoadTree(jentry);
-      //std::cout<<"ok"<<std::endl;
-      if (ientry < 0)
-	break;
+      if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
-      fill();
       // if (Cut(ientry) < 0) continue;
+      fill();
    }
-   
-   endJob();
-   
 }
+
 
 void gemDigiAnalysis::book()
 {
-
   m_outFile.cd();
 
-  m_plots["ScatterPlotXvsY"] = new TH2F("ScatterPlotXvsY",
-					"Scatter Plot; X; Y",
-					100,-250.,250.,
-					100,-250.,250.);
+  m_plots["ScatteringDigisPlotXvsY"] = new TH2F("ScatteringDigisPlotXvsY",
+						"Scatter Plot GEM Digis; globalX; globalY",
+						100,-250.,250.,
+						100,-250.,250.);
+
+  m_plots["ScatteringRecHitsPlotXvsY"] = new TH2F("ScatteringRecHitsPlotXvsY",
+						  "Scatter Plot GEM RecHits; globalX; globalY",
+						  100,-250.,250.,
+						  100,-250.,250.);
+
+
 
 }
 
 void gemDigiAnalysis::fill()
 {
 
-  //std::cout<<gemDigi_nDigis<<std::endl;
-  for(std::size_t iDigi = 0; iDigi<gemDigi_nDigis ; ++iDigi)
-    {
+  for(std::size_t iDigi = 0; iDigi < gemDigi_nDigis; ++iDigi)
+    {  
       Double_t x = gemDigi_g_x->at(iDigi);
       Double_t y = gemDigi_g_y->at(iDigi);
-      //std::cout << "x= " << x << std::endl; 
-      m_plots["ScatterPlotXvsY"]->Fill(x, y);
+    
+      m_plots["ScatteringDigisPlotXvsY"]->Fill(x,y);
+    }
+
+  for(std::size_t iRecDigi = 0; iRecDigi < gemRecHit_nRecHits; ++ iRecDigi)
+    {
+      Double_t rec_x = gemRecHit_g_x->at(iRecDigi);
+      Double_t rec_y = gemRecHit_g_y->at(iRecDigi);
+
+      m_plots["ScatteringRecHitsPlotXvsY"]->Fill(rec_x,rec_y);
     }
 }
-
-
+    
 void gemDigiAnalysis::endJob()
 {
 
   m_outFile.cd();
-
   m_outFile.Write();
   m_outFile.Close();
 
 }
+

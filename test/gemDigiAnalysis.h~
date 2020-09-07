@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Tue Sep  1 16:07:36 2020 by ROOT version 6.20/07
+// Mon Sep  7 17:59:24 2020 by ROOT version 6.22/00
 // from TTree MuDPGTree/Mu DPG Tree
 // found on file: MuDPGNtuple_11_1_2_patch2.root
 //////////////////////////////////////////////////////////
@@ -19,14 +19,7 @@
 
 class gemDigiAnalysis {
 public :
-  
-  gemDigiAnalysis(const TString & inFileName,
-		  const TString & outFileName);
-
-
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
-   // fChain = static_cast<TTree*>(inFileName.Get("muNtupleProducer/MuDPGTree"));
-
    Int_t           fCurrent; //!current Tree number in a TChain
 
 // Fixed size dimensions of array or collections stored in the TTree if any.
@@ -151,9 +144,16 @@ public :
    vector<short>   *gemDigi_pad;
    vector<float>   *gemDigi_g_r;
    vector<float>   *gemDigi_g_phi;
+   vector<float>   *gemDigig_eta;
    vector<float>   *gemDigi_g_x;
    vector<float>   *gemDigi_g_y;
    vector<float>   *gemDigi_g_z;
+   UInt_t          gemRecHit_nRecHits;
+   vector<float>   *gemRecHit_g_r;
+   vector<float>   *gemRecHit_g_phi;
+   vector<float>   *gemRecHit_g_x;
+   vector<float>   *gemRecHit_g_y;
+   vector<float>   *gemRecHit_g_z;
 
    // List of branches
    TBranch        *b_dtDigi_nDigis;   //!
@@ -275,9 +275,16 @@ public :
    TBranch        *b_gemDigi_pad;   //!
    TBranch        *b_gemDigi_g_r;   //!
    TBranch        *b_gemDigi_g_phi;   //!
+   TBranch        *b_gemDigig_eta;   //!
    TBranch        *b_gemDigi_g_x;   //!
    TBranch        *b_gemDigi_g_y;   //!
    TBranch        *b_gemDigi_g_z;   //!
+   TBranch        *b_gemRecHit_nRecHits;   //!
+   TBranch        *b_gemRecHit_g_r;   //!
+   TBranch        *b_gemRecHit_g_phi;   //!
+   TBranch        *b_gemRecHit_g_x;   //!
+   TBranch        *b_gemRecHit_g_y;   //!
+   TBranch        *b_gemRecHit_g_z;   //!
 
    gemDigiAnalysis(TTree *tree=0);
    virtual ~gemDigiAnalysis();
@@ -290,15 +297,17 @@ public :
    virtual void     Show(Long64_t entry = -1);
 
  protected:
- 
-   TFile m_outFile;
    
    void virtual book();
    void virtual fill();
    void virtual endJob();
-   
-   std::map<std::string, TH1*> m_plots;
-   
+
+   TFile m_outFile;
+   TFile m_inFile;
+
+   //std::map<std::string, TH2*> m_plots;
+
+
 };
 
 #endif
@@ -470,9 +479,15 @@ void gemDigiAnalysis::Init(TTree *tree)
    gemDigi_pad = 0;
    gemDigi_g_r = 0;
    gemDigi_g_phi = 0;
+   gemDigig_eta = 0;
    gemDigi_g_x = 0;
    gemDigi_g_y = 0;
    gemDigi_g_z = 0;
+   gemRecHit_g_r = 0;
+   gemRecHit_g_phi = 0;
+   gemRecHit_g_x = 0;
+   gemRecHit_g_y = 0;
+   gemRecHit_g_z = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -598,9 +613,16 @@ void gemDigiAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("gemDigi_pad", &gemDigi_pad, &b_gemDigi_pad);
    fChain->SetBranchAddress("gemDigi_g_r", &gemDigi_g_r, &b_gemDigi_g_r);
    fChain->SetBranchAddress("gemDigi_g_phi", &gemDigi_g_phi, &b_gemDigi_g_phi);
+   fChain->SetBranchAddress("gemDigig_eta", &gemDigig_eta, &b_gemDigig_eta);
    fChain->SetBranchAddress("gemDigi_g_x", &gemDigi_g_x, &b_gemDigi_g_x);
    fChain->SetBranchAddress("gemDigi_g_y", &gemDigi_g_y, &b_gemDigi_g_y);
    fChain->SetBranchAddress("gemDigi_g_z", &gemDigi_g_z, &b_gemDigi_g_z);
+   fChain->SetBranchAddress("gemRecHit_nRecHits", &gemRecHit_nRecHits, &b_gemRecHit_nRecHits);
+   fChain->SetBranchAddress("gemRecHit_g_r", &gemRecHit_g_r, &b_gemRecHit_g_r);
+   fChain->SetBranchAddress("gemRecHit_g_phi", &gemRecHit_g_phi, &b_gemRecHit_g_phi);
+   fChain->SetBranchAddress("gemRecHit_g_x", &gemRecHit_g_x, &b_gemRecHit_g_x);
+   fChain->SetBranchAddress("gemRecHit_g_y", &gemRecHit_g_y, &b_gemRecHit_g_y);
+   fChain->SetBranchAddress("gemRecHit_g_z", &gemRecHit_g_z, &b_gemRecHit_g_z);
    Notify();
 }
 

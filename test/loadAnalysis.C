@@ -2,6 +2,6 @@
 
 void loadAnalysis()
 {
-  gROOT->ProcessLine(".L gemDigiAnalysis.C++");
+  gROOT->ProcessLine(".L gemAnalysis.C++");
   //gROOT->ProcessLine("");
 }

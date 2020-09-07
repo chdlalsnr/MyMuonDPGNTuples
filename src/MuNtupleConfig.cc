@@ -42,7 +42,9 @@ MuNtupleConfig::MuNtupleConfig(const edm::ParameterSet & config)
     m_dtSyncs[PhaseTag::PH2] = DTTTrigSyncFactory::get()->create(config.getUntrackedParameter<std::string>("ph2DTtTrigMode"),
 								 config.getUntrackedParameter<edm::ParameterSet>("ph2DTtTrigModeConfig"));
 
-  m_inputTags["DigiTag"] = config.getUntrackedParameter<edm::InputTag>("DigiTag", none);
+  m_inputTags["gemDigiTag"] = config.getUntrackedParameter<edm::InputTag>("gemDigiTag", none);
+  
+  m_inputTags["gemRecHitTag"] = config.getUntrackedParameter<edm::InputTag>("gemRecHitTag", none);
 
 }
 

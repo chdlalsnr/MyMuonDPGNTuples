@@ -56,6 +56,7 @@ class MuNtupleGEMDigiFiller : public MuNtupleBaseFiller
 
   std::vector<float> m_digi_g_r;
   std::vector<float> m_digi_g_phi;
+  std::vector<float> m_digi_g_eta;
   std::vector<float> m_digi_g_x;
   std::vector<float> m_digi_g_y;
   std::vector<float> m_digi_g_z;
