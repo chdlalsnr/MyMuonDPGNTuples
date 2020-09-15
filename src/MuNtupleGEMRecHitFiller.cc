@@ -27,6 +27,8 @@ void MuNtupleGEMRecHitFiller::initialize()
   
   m_tree->Branch((m_label + "_nRecHits").c_str(), &m_nRecHits, (m_label + "_nRecHits/i").c_str());
 
+  m_tree->Branch((m_label + "_cluster_size").c_str(), &m_rechit_cluster_size);
+  
   m_tree->Branch((m_label + "_g_r").c_str(), &m_rechit_g_r);
   m_tree->Branch((m_label + "_g_phi").c_str(), &m_rechit_g_phi);
   m_tree->Branch((m_label + "_g_x").c_str(), &m_rechit_g_x);
@@ -40,6 +42,8 @@ void MuNtupleGEMRecHitFiller::clear()
 {
 
   m_nRecHits = 0;
+
+  m_rechit_cluster_size.clear();
   
   m_rechit_g_r.clear();
   m_rechit_g_phi.clear();
@@ -74,6 +78,10 @@ void MuNtupleGEMRecHitFiller::fill(const edm::Event & ev)
 	    m_rechit_g_x.push_back(rechit_global_pos.x());
 	    m_rechit_g_y.push_back(rechit_global_pos.y());
 	    m_rechit_g_z.push_back(rechit_global_pos.z());
+
+	    auto cluster_size = rechit->clusterSize();
+
+	    m_rechit_cluster_size.push_back(cluster_size);
 
 	    m_nRecHits++;
 	  }

@@ -1,9 +1,110 @@
 
 # DO NOT DELETE
 
-./gemAnalysis_C.so: gemAnalysis.h /usr/include/root/TROOT.h
-./gemAnalysis_C.so: /usr/include/root/TChain.h /usr/include/root/TFile.h
-./gemAnalysis_C.so: /usr/include/root/TClonesArray.h /usr/include/root/TH2.h
-./gemAnalysis_C.so: /usr/include/root/TStyle.h /usr/include/root/TCanvas.h
-./gemAnalysis_C.so: /usr/include/root/RVersion.h /usr/include/root/RConfig.h /usr/include/root/TClass.h /usr/include/root/TDictAttributeMap.h /usr/include/root/TInterpreter.h /usr/include/root/TROOT.h /usr/include/root/TBuffer.h /usr/include/root/TMemberInspector.h /usr/include/root/TError.h /usr/include/root/RtypesImp.h /usr/include/root/TIsAProxy.h /usr/include/root/TFileMergeInfo.h /usr/include/root/TCollectionProxyInfo.h /usr/bin/rootcling
-gemAnalysis_C__ROOTBUILDVERSION= 6.22/00
+./gemAnalysis_C.so: gemAnalysis.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TROOT.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TDirectory.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TBuffer.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TDataType.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TDictionary.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TNamed.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TObject.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/RConfigure.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/Rtypes.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/RtypesCore.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ROOT/RConfig.hxx
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/RVersion.h
+./gemAnalysis_C.so: /usr/include/features.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/DllImport.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/snprintf.h
+./gemAnalysis_C.so: /usr/include/stdio.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/strlcpy.h
+./gemAnalysis_C.so: /usr/include/unistd.h /usr/include/string.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TGenericClassInfo.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TSchemaHelper.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TIsAProxy.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVirtualIsAProxy.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TStorage.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVersionCheck.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/RVersion.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TString.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TMathBase.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ROOT/RStringView.hxx
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ROOT/TypeTraits.hxx
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ROOT/RSpan.hxx
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ROOT/span.hxx
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ESTLType.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TClass.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TObjArray.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TSeqCollection.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TCollection.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TIterator.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVirtualRWMutex.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVirtualMutex.h
+./gemAnalysis_C.so: /usr/include/assert.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TObjString.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ThreadLocalStorage.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/Bytes.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TList.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TDatime.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TUUID.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TChain.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TTree.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/Compression.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ROOT/TIOFeatures.hxx
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TBasket.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TKey.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TArrayD.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TArray.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TArrayI.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TAttFill.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TAttLine.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TAttMarker.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TBranch.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TBranchCacheInfo.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TBits.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVirtualTreePlayer.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TFile.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TDirectoryFile.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TMap.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/THashTable.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TUrl.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ROOT/RConcurrentHashColl.hxx
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ROOT/TRWSpinLock.hxx
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/ROOT/TSpinMutex.hxx
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TClonesArray.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TH2.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TH1.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TAxis.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TAttAxis.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TArrayC.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TArrayS.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TArrayF.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/Foption.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/Fit/FitExecutionPolicy.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVectorFfwd.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVectorDfwd.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TFitResultPtr.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TMatrixFBasefwd.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TMatrixDBasefwd.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TEfficiency.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TStyle.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TAttText.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TColor.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TCanvas.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TPad.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVirtualPad.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TAttPad.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVirtualX.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/GuiTypes.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/Buttons.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TQObject.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TVirtualQConnection.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TInterpreter.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TInterpreterValue.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TAttBBox2D.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TPoint.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TAttCanvas.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TCanvasImp.h
+./gemAnalysis_C.so: /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/RVersion.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/RConfig.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TClass.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TDictAttributeMap.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TInterpreter.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TROOT.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TBuffer.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TMemberInspector.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TError.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/RtypesImp.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TIsAProxy.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TFileMergeInfo.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/lcg/root/6.20.06-bcolbf/include/TCollectionProxyInfo.h /cvmfs/cms.cern.ch/slc7_amd64_gcc820/cms/cmssw-patch/CMSSW_11_1_2_patch3/external/slc7_amd64_gcc820/bin/rootcling
+gemAnalysis_C__ROOTBUILDVERSION= 6.20/07

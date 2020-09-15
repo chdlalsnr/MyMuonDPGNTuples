@@ -16,6 +16,8 @@
 #include "FWCore/Framework/interface/one/EDAnalyzer.h"
 #include "FWCore/ParameterSet/interface/ConfigurationDescriptions.h"
 
+#include "RecoMuon/TrackingTools/interface/MuonServiceProxy.h"
+
 #include <memory>
 
 class MuNtupleProducer : public edm::one::EDAnalyzer<edm::one::SharedResources,edm::one::WatchRuns>
@@ -50,6 +52,8 @@ class MuNtupleProducer : public edm::one::EDAnalyzer<edm::one::SharedResources,e
 
   /// The container with all the fillers
   std::vector<std::unique_ptr<MuNtupleBaseFiller>> m_fillers;
+
+  
 
 };
 

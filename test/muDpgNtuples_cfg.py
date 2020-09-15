@@ -23,6 +23,7 @@ options.register('nEvents',
                  "Maximum number of processed events")
 
 options.register('inputFolder',
+                 #'/afs/cern.ch/work/r/rosma/public/DTNtuples/MyCosmicProduction/',
                  '/afs/cern.ch/user/g/gmilella/CMSSW_11_2_0_pre2/src/DTNtuples/MyCosmicProduction/',
                  #'/eos/cms/store/user/battilan/DPGO/MuonDPGNtuples/', #default value
                  VarParsing.VarParsing.multiplicity.singleton,

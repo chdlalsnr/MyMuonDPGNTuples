@@ -14,6 +14,8 @@ MuNtupleGEMDigiFiller::MuNtupleGEMDigiFiller(edm::ConsumesCollector && collector
   edm::InputTag & iTag = m_config->m_inputTags["gemDigiTag"];
 if (iTag.label() != "none") m_gemDigiToken = collector.consumes<GEMDigiCollection>(iTag);
 
+ 
+
 }
 
 MuNtupleGEMDigiFiller::~MuNtupleGEMDigiFiller()
@@ -90,8 +92,8 @@ void MuNtupleGEMDigiFiller::fill(const edm::Event & ev)
 	  //const MEMapKey1 det_key{gem_id.region(), gem_id.station()};
 	  for (auto digi = range.first; digi != range.second; ++digi) {
 	    Ndigi++;
-	    std::cout<<" station="<<gem_id.station()<<" gem roll="<<gem_id.roll()<<" region="<<\
-	      gem_id.region()<<" digi  strip="<<digi->strip()<<" bx="<<digi->bx()<<std::endl;
+	    //std::cout<<" station="<<gem_id.station()<<" gem roll="<<gem_id.roll()<<" region="<< \
+		//gem_id.region()<<" digi  strip="<<digi->strip()<<" bx="<<digi->bx()<<std::endl;
 	    m_digi_station.push_back(gem_id.station());
 	    m_digi_roll.push_back(gem_id.roll());
 	    m_digi_strip.push_back(digi->strip());

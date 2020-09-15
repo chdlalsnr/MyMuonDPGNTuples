@@ -64,6 +64,7 @@ class MuNtupleBaseFiller
   /// The label at the beginning of each branch
   std::string m_label;
 
+ 
   /// Conditional getter :
   /// checks whether a token is valid and if
   /// retireving the data collection succeded
