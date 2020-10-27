@@ -28,14 +28,16 @@ void MuNtupleGEMRecHitFiller::initialize()
   m_tree->Branch((m_label + "_nRecHits").c_str(), &m_nRecHits, (m_label + "_nRecHits/i").c_str());
 
   m_tree->Branch((m_label + "_cluster_size").c_str(), &m_rechit_cluster_size);
-  
+  m_tree->Branch((m_label + "_bx").c_str(), &m_rechit_bx);
+
   m_tree->Branch((m_label + "_g_r").c_str(), &m_rechit_g_r);
   m_tree->Branch((m_label + "_g_phi").c_str(), &m_rechit_g_phi);
   m_tree->Branch((m_label + "_g_x").c_str(), &m_rechit_g_x);
   m_tree->Branch((m_label + "_g_y").c_str(), &m_rechit_g_y);
   m_tree->Branch((m_label + "_g_z").c_str(), &m_rechit_g_z);
  
-
+  
+  
 }
 
 void MuNtupleGEMRecHitFiller::clear()
@@ -44,7 +46,8 @@ void MuNtupleGEMRecHitFiller::clear()
   m_nRecHits = 0;
 
   m_rechit_cluster_size.clear();
-  
+  m_rechit_bx.clear();
+ 
   m_rechit_g_r.clear();
   m_rechit_g_phi.clear();
   m_rechit_g_x.clear();
@@ -62,6 +65,8 @@ void MuNtupleGEMRecHitFiller::fill(const edm::Event & ev)
   edm::Handle<GEMRecHitCollection> rechit_collection;
   ev.getByToken(m_rechit_token_,rechit_collection);
   const auto gem = m_config->m_gemGeometry; 
+
+  std::cout << " Evento Numero: " << ev.run() << " , " << ev.eventAuxiliary().event() << std::endl;
     
     if (rechit_collection.isValid())
       {
@@ -80,11 +85,15 @@ void MuNtupleGEMRecHitFiller::fill(const edm::Event & ev)
 	    m_rechit_g_z.push_back(rechit_global_pos.z());
 
 	    auto cluster_size = rechit->clusterSize();
-
+	    int bx = rechit->BunchX();
+	    
 	    m_rechit_cluster_size.push_back(cluster_size);
+	    m_rechit_bx.push_back(bx);
+	    //std::cout << " cluster size: " << cluster_size << std::endl;
 
 	    m_nRecHits++;
 	  }
+	//std::cout << " # rechits: " << m_nRecHits << std::endl;
 
       }
 

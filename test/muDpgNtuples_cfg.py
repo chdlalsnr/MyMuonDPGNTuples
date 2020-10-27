@@ -23,8 +23,12 @@ options.register('nEvents',
                  "Maximum number of processed events")
 
 options.register('inputFolder',
+                 #'/afs/cern.ch/user/f/fsimone/public/Gabriele/',
+                 #'Run3Summer19GS-step2.root',
+                 '/eos/cms/store/express/Commissioning2020/ExpressCosmics/FEVT/Express-v1/000/337/973/00000/',
+                 #'/store/data/Commissioning2020/Cosmics/RAW-RECO/CosmicSP-PromptReco-v1/000/335/443/00000',
                  #'/afs/cern.ch/work/r/rosma/public/DTNtuples/MyCosmicProduction/',
-                 '/afs/cern.ch/user/g/gmilella/CMSSW_11_2_0_pre2/src/DTNtuples/MyCosmicProduction/',
+                 #'/afs/cern.ch/user/g/gmilella/CMSSW_11_2_0_pre2/src/DTNtuples/MyCosmicProduction/',
                  #'/eos/cms/store/user/battilan/DPGO/MuonDPGNtuples/', #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
@@ -37,7 +41,8 @@ options.register('secondaryInputFolder',
                  "EOS folder with input files for secondary files")
 
 options.register('ntupleName',
-                 './MuDPGNtuple_11_1_2_patch2.root', #default value
+                 #'./MuDPGNtuple_11_1_2_patch2.root',
+                 './MuDPGNtuple_Commissioning2020',
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
                  "Folder and name ame for output ntuple")
@@ -79,9 +84,13 @@ process.TFileService = cms.Service('TFileService',
 process.load('Configuration/StandardSequences/GeometryRecoDB_cff')
 process.load("Configuration.StandardSequences.MagneticField_cff")
 
+process.load("TrackingTools/TransientTrack/TransientTrackBuilder_cfi")
+process.load('TrackPropagation.SteppingHelixPropagator.SteppingHelixPropagatorAny_cfi')
+
 process.load('Configuration.StandardSequences.RawToDigi_Data_cff')
 process.load('MuDPGAnalysis.MuonDPGNtuples.muNtupleProducer_cfi')
 
 process.p = cms.Path(#process.muonDTDigis + 
                       process.muNtupleProducer)
+
 

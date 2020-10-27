@@ -11,6 +11,7 @@
 #include "Geometry/GEMGeometry/interface/GEMGeometry.h"
 
 #include "DataFormats/DetId/interface/DetId.h"
+#include "DataFormats/MuonDetId/interface/MuonSubdetId.h"
 #include "DataFormats/MuonDetId/interface/DTChamberId.h"
 #include "DataFormats/MuonReco/interface/MuonChamberMatch.h"
 #include "DataFormats/MuonReco/interface/MuonSegmentMatch.h"
@@ -38,7 +39,7 @@
 MuNtupleGEMMuonFiller::MuNtupleGEMMuonFiller(edm::ConsumesCollector && collector,
 				       const std::shared_ptr<MuNtupleConfig> config, 
 				       std::shared_ptr<TTree> tree, const std::string & label) : 
-  MuNtupleBaseFiller(config, tree, label), m_nullVecF()
+  MuNtupleTrackBaseFiller(config, tree, label), m_nullVecF()
 {
 
   edm::InputTag & muonTag = m_config->m_inputTags["muonTag"];
@@ -89,6 +90,15 @@ void MuNtupleGEMMuonFiller::initialize()
   m_tree->Branch((m_label + "_isMedium").c_str(), &m_isMedium);
   m_tree->Branch((m_label + "_isTight").c_str(), &m_isTight);
 
+  m_tree->Branch((m_label + "_propagatedLoc_x").c_str(), &m_propagatedLoc_x);
+  m_tree->Branch((m_label + "_propagatedLoc_y").c_str(), &m_propagatedLoc_y);
+  m_tree->Branch((m_label + "_propagatedLoc_z").c_str(), &m_propagatedLoc_z);
+  m_tree->Branch((m_label + "_propagatedLoc_r").c_str(), &m_propagatedLoc_r);
+  m_tree->Branch((m_label + "_propagatedGlb_x").c_str(), &m_propagatedGlb_x);
+  m_tree->Branch((m_label + "_propagatedGlb_y").c_str(), &m_propagatedGlb_y);
+  m_tree->Branch((m_label + "_propagatedGlb_z").c_str(), &m_propagatedGlb_z);
+  m_tree->Branch((m_label + "_propagatedGlb_r").c_str(), &m_propagatedGlb_r);
+
 }
 
 void MuNtupleGEMMuonFiller::clear()
@@ -110,10 +120,19 @@ void MuNtupleGEMMuonFiller::clear()
   m_isLoose.clear();
   m_isMedium.clear();
   m_isTight.clear();
+  
+  m_propagatedLoc_x.clear();
+  m_propagatedLoc_y.clear();
+  m_propagatedLoc_z.clear();
+  m_propagatedLoc_r.clear();
+  m_propagatedGlb_x.clear();
+  m_propagatedGlb_y.clear();
+  m_propagatedGlb_z.clear();
+  m_propagatedGlb_r.clear();
 
 }
 
-void MuNtupleGEMMuonFiller::fill(const edm::Event & ev)
+void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetup & environment)
 {
 
   clear();
@@ -129,14 +148,14 @@ void MuNtupleGEMMuonFiller::fill(const edm::Event & ev)
     std::cout << "GEMRecHitCollection is invalid" << std::endl;
     return;
   }
-  
+ 
+  m_config->muon_service->update(environment);
   edm::ESHandle<Propagator>&& propagator = m_config->muon_service->propagator("SteppingHelixPropagatorAny");
   if (not propagator.isValid()) {
     std::cout<< "Propagator is invalid" << std::endl;
     return;
-  }
-
-  
+    }
+    
   const auto gem = m_config->m_gemGeometry;
   if (not gem.isValid()) {
     std::cout << "GEMGeometry is invalid" << std::endl;
@@ -145,10 +164,11 @@ void MuNtupleGEMMuonFiller::fill(const edm::Event & ev)
   
   const auto transient_track_builder = m_config->m_transientTrackBuilder;
 
+  std::cout << "Evento Numero: " << ev.run() <<", " << ev.eventAuxiliary().event() << std::endl;
 
   if (muons.isValid() && csc_segments.isValid() && vtxs.isValid()) 
     {
-      //std::cout << "ciao" <<std::endl;
+  
       for (const auto & muon : (*muons))
 	{
 
@@ -169,21 +189,22 @@ void MuNtupleGEMMuonFiller::fill(const edm::Event & ev)
 
 	  m_nMuons++;
 
-	  if(!muon.outerTrack().isNull())
+	  /*if(!muon.outerTrack().isNull())
 	    {
-	      //reco::TrackRef outerTrackRef = muon.outerTrack();
+	      reco::TrackRef outerTrackRef = muon.outerTrack();
 	      //std::cout << "ciao" <<std::endl;
-	      //auto recHitMu = outerTrackRef->recHitsBegin();
-	      //auto recHitMuEnd = outerTrackRef->recHitsEnd();
+	      auto recHitMu = outerTrackRef->recHitsBegin();
+	      auto recHitMuEnd = outerTrackRef->recHitsEnd();
 
-	      /*for(; recHitMu != recHitMuEnd; ++recHitMu)
+	      for(; recHitMu != recHitMuEnd; ++recHitMu)
 		{
 		  DetId detId = (*recHitMu)->geographicalId();
 		  //std::cout << "ciao" <<std::endl;
 		  if(detId.det() == DetId::Muon && detId.subdetId() == MuonSubdetId::CSC)
 		    {
-		      //std::cout << (*recHitMu)->chamberId().station() <<std::endl;
-		      const auto cscSegmentSta = dynamic_cast<const CSCSegment*>((*recHitMu));
+		      //const auto cscSegmentSta = dynamic_cast<const CSCSegment*>((*recHitMu));
+		      //std::cout << cscSegmentSta << std::endl;
+		      //std::cout << cscSegmentSta->cscDetId().station() << std::endl;
 		      //std::cout << (*recHitMu)->localPosition().x() << std::endl;
 		      //std::cout << "!!" << std::endl;
 		      //std::cout << "ciao" <<std::endl;
@@ -193,65 +214,140 @@ void MuNtupleGEMMuonFiller::fill(const edm::Event & ev)
 			  //std::cout << csc_segment.localPosition().x() <<std::endl;
 			  //std::cout << "ciao" <<std::endl;
 			  if( 
-			     std::abs((*recHitMu)->localPosition().x() -  csc_segment.localPosition().x()) < 0.01
+			     std::abs((*recHitMu)->localPosition().x() -  csc_segment.localPosition().x()) < 0.01 //&& 
 			     //cscSegmentSta &&
-			    //cscSegmentSta->cscDetId().station() == csc_segment.cscDetId().station()
+			     //cscSegmentSta->cscDetId().station() == csc_segment.cscDetId().station()
 			  )
 			  {
-			    //std::cout << "ciao" << std::endl; 
+			    std::cout << "ciao" << std::endl; 
 			   }
 		       
 			}
 		    }      
 		  
-		}*/
+		    }*/
+
+	  if(!muon.outerTrack().isNull())
+	    {
 	      
-	      const reco::Track* track = nullptr;
-	      track = muon.outerTrack().get();
+	      const reco::Track* track = muon.outerTrack().get();
+	      const reco::TrackRef outerTrackRef = muon.outerTrack();
 	      if (track == nullptr) {
 		std::cout << "failed to get muon track" << std::endl;
 		continue;
 	      }
 	      
-	      const reco::TransientTrack&& transient_track = transient_track_builder->build(track);
-	      if (not transient_track.isValid()) {
-		std::cout<<"failed  to build TransientTrack" << std::endl;
-		continue;
+	      auto recHitMu = outerTrackRef->recHitsBegin();
+	      auto recHitMuEnd = outerTrackRef->recHitsEnd();
+	      
+	      for(; recHitMu != recHitMuEnd; ++recHitMu){
+		DetId detId = (*recHitMu)->geographicalId();
+		if(detId.det() == DetId::Muon && detId.subdetId() == MuonSubdetId::CSC)
+		  {
+		    const CSCRecHit2D *cscRecHitSta = dynamic_cast<const CSCRecHit2D *>(*recHitMu);
+		    //const CSCSegment *cscSegmentSta = dynamic_cast<const CSCSegment*>(*recHitMu);
+		    //std::vector<const TrackingRecHit *> componentHits = cscSegmentSta->recHits();
+		    //if(cscSegmentSta){
+		    //std::cout << " ciao2" << std::endl;
+		    //}
+		    
+		    //std::cout << cscSegmentSta->time() << std::endl;
+		    //std::cout << cscSegmentSta->cscDetId().station() << std::endl;
+		    if(cscRecHitSta->cscDetId().station() == 1 && cscRecHitSta->cscDetId().ring() == 1)
+		    {
+		      //std::cout << " ciao1" << std::endl;
+		      const reco::TransientTrack&& transient_track = transient_track_builder->build(track);
+		      if (not transient_track.isValid()) {
+			  std::cout<<"failed  to build TransientTrack" << std::endl;
+			  continue;
+			}
+			
+		      for (const GEMEtaPartition* eta_partition : gem->etaPartitions()) {
+			// Skip propagation inn the opposite direction.
+		        if (muon.eta() * eta_partition->id().region() < 0){
+			    //std::cout << "different endcaps " << std::endl;
+		          continue;
+			  }
+			  //  std::cout << "rosma" << std::endl;
+			  const BoundPlane& bound_plane = eta_partition->surface();
+			  
+			  const TrajectoryStateOnSurface&& tsos =
+			    propagator->propagate(transient_track.outermostMeasurementState(), bound_plane);
+			  if (not tsos.isValid()) {
+			    std::cout << "failed to propagate" << std::endl;
+			    continue;
+			  }
+			  
+			  const LocalPoint&& tsos_local_pos = tsos.localPosition();
+			  const GlobalPoint&& tsos_global_pos = tsos.globalPosition();
+			  //std::cout << " anna " << std::endl;
+			  const LocalPoint tsos_local_pos_2d(tsos_local_pos.x(), tsos_local_pos.y(), 0.0f);
+			  //std::cout << " caterina " << std::endl;
+			  if (not bound_plane.bounds().inside(tsos_local_pos_2d)) {
+			    continue;
+			  }
+			  //std::cout << tsos_local_pos.x() << std::endl;
+			  
+			  const GEMDetId&& gem_id = eta_partition->id();
+			  //auto range = rechit_collection->get(gem_id);
+			  /*float min_residual_x = m_config->residual_x_cut;
+			  const GEMRecHit* matched_hit = nullptr;
+			  for(auto rechit = rechit_collection->begin(); rechit != rechit_collection->end(); ++rechit)
+			  {
+			    //std::cout << " gabriele " << std::endl;
+			    float residual_x = std::fabs(tsos_local_pos.x() - rechit->localPosition().x());
+			    std::cout << "ppppp"<<  residual_x << std::endl;
+			    std::cout << "aaaa" << tsos_local_pos.x() << std::endl;
+			    std::cout << "bbb" << rechit->localPosition().x() << std::endl;
+			    if (tsos_local_pos.x()*rechit->localPosition().x()>0){
+			      if (residual_x <= min_residual_x) {
+				min_residual_x = residual_x;
+				matched_hit = &(*rechit);
+			      }
+			    }
+			    } */
+			
+			  m_propagatedLoc_x.push_back(tsos_local_pos.x());
+			  m_propagatedLoc_y.push_back(tsos_local_pos.y());
+			  m_propagatedLoc_z.push_back(tsos_local_pos.z());
+			  m_propagatedLoc_r.push_back(tsos_local_pos.perp());
+			  m_propagatedGlb_x.push_back(tsos_global_pos.x());
+			  m_propagatedGlb_y.push_back(tsos_global_pos.y());
+			  m_propagatedGlb_z.push_back(tsos_global_pos.z());
+			  m_propagatedGlb_r.push_back(tsos_global_pos.perp());
+
+			  //std::cout << tsos_global_pos.x()  << std::endl;
+			  //std::cout << "##" << hit_global_pos.x() << std::endl;
+			   			  
+			   } 
+		    }
+		  }
 	      }
-
-	      for (const GEMEtaPartition* eta_partition : gem->etaPartitions()) {
-		// Skip propagation inn the opposite direction.
-		if (muon.eta() * eta_partition->id().region() < 0)
-		  continue;
-
-		const BoundPlane& bound_plane = eta_partition->surface();
-		
-		const TrajectoryStateOnSurface&& tsos =
-		  propagator->propagate(transient_track.outermostMeasurementState(), bound_plane);
-		if (not tsos.isValid()) {
-		  continue;
-		}
-		
-		const LocalPoint&& tsos_local_pos = tsos.localPosition();
-		const LocalPoint tsos_local_pos_2d(tsos_local_pos.x(), tsos_local_pos.y(), 0.0f);
-		if (not bound_plane.bounds().inside(tsos_local_pos_2d)) {
-		  continue;
-		}
-		
-		const GEMDetId&& gem_id = eta_partition->id();
-		/*const GEMRecHit* matched_hit = findMatchedHit(tsos_local_pos.x(), rechit_collection->get(gem_id));
-		const LocalPoint&& hit_local_pos = matched_hit->localPosition();
-		const GlobalPoint&& hit_global_pos = eta_partition->toGlobal(hit_local_pos);
-		const GlobalPoint&& tsos_global_pos = tsos.globalPosition();
-		*/
-		
-	      }
-
 	    }
 	}
     }
-
+  
   return;
+
+}
+
+const GEMRecHit* MuNtupleGEMMuonFiller::findMatchedHit(const float track_local_x,
+						       const GEMRecHitCollection::range range) {
+  const GEMRecHit* closest_hit = nullptr;
+  float min_residual_x = m_config->residual_x_cut;
+  
+     for(auto hit = range.first; hit != range.second; ++hit) {
+     std::cout << hit->localPosition().x() << std::endl;
+      float residual_x = std::fabs(track_local_x - hit->localPosition().x());
+      std::cout << "ppppp"<<  residual_x << std::endl;
+      if (residual_x <= min_residual_x) {
+	min_residual_x = residual_x;
+	closest_hit = &(*hit);
+      }
+    }
+
+
+  return closest_hit;
 
 }
 

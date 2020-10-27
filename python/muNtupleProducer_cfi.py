@@ -1,6 +1,9 @@
 import FWCore.ParameterSet.Config as cms
+from RecoMuon.TrackingTools.MuonServiceProxy_cff import MuonServiceProxy
 
 muNtupleProducer = cms.EDAnalyzer("MuNtupleProducer",
+                                  MuonServiceProxy,
+                                  residualXCut = cms.double(5.0),
                                   ph1DtDigiTag = cms.untracked.InputTag("muonDTDigis"),
                                   ph2DtDigiTag = cms.untracked.InputTag("none"),
 

@@ -2,6 +2,7 @@
 #define MuNtuple_MuNtupleGEMMuonFiller_h
 
 #include "MuDPGAnalysis/MuonDPGNtuples/src/MuNtupleBaseFiller.h"
+#include "MuDPGAnalysis/MuonDPGNtuples/src/MuNtupleTrackBaseFiller.h"
 
 #include "DataFormats/MuonReco/interface/Muon.h"
 #include "DataFormats/VertexReco/interface/Vertex.h"
@@ -22,7 +23,7 @@
 #include "TClonesArray.h"
 #include "TVectorF.h"
 
-class MuNtupleGEMMuonFiller : public MuNtupleBaseFiller
+class MuNtupleGEMMuonFiller : public MuNtupleTrackBaseFiller
 {
 
  public:
@@ -40,9 +41,8 @@ class MuNtupleGEMMuonFiller : public MuNtupleBaseFiller
   
   /// Clear branches before event filling 
   virtual void clear() final;
-  
-  /// Fill tree branches for a given events
-  virtual void fill(const edm::Event & ev) final;    
+ 
+  virtual void fill_new(const edm::Event & ev, const edm::EventSetup & environment) final;
   
  private:
 
@@ -55,7 +55,10 @@ class MuNtupleGEMMuonFiller : public MuNtupleBaseFiller
   edm::EDGetTokenT<edm::TriggerResults>   m_trigResultsToken;
   edm::EDGetTokenT<trigger::TriggerEvent> m_trigEventToken;
 
-  const GEMRecHit *findMatchedHit(const float, const GEMRecHitCollection::range &);
+  const GEMRecHit *findMatchedHit(const float,  const GEMRecHitCollection::range );
+
+  const TrackingRecHit *getHitPtr(edm::OwnVector<TrackingRecHit>::const_iterator iter) const {return &*iter; }
+  const TrackingRecHit *getHitPtr(const trackingRecHit_iterator &iter) const {return &**iter; }
 
   TVectorF m_nullVecF;
 
@@ -75,6 +78,15 @@ class MuNtupleGEMMuonFiller : public MuNtupleBaseFiller
   std::vector<bool>  m_isLoose;  // Loose muon ID
   std::vector<bool>  m_isMedium; // Medium muon ID
   std::vector<bool>  m_isTight;  // Tight muon ID
+
+  std::vector<float> m_propagatedLoc_x;
+  std::vector<float> m_propagatedLoc_y;
+  std::vector<float> m_propagatedLoc_z;
+  std::vector<float> m_propagatedLoc_r;
+  std::vector<float> m_propagatedGlb_x;
+  std::vector<float> m_propagatedGlb_y;
+  std::vector<float> m_propagatedGlb_z;
+  std::vector<float> m_propagatedGlb_r;
 
 };
 
