@@ -53,6 +53,8 @@ class MuNtupleConfig
   void getES(const edm::Run &run, 
 	     const edm::EventSetup & environment);
 
+  edm::EventSetup passES();
+
   /// Map containing different input tags
   std::map<std::string, edm::InputTag> m_inputTags;
 
@@ -71,8 +73,8 @@ class MuNtupleConfig
   /// Handle to the Transient Track Builder
   edm::ESHandle<TransientTrackBuilder> m_transientTrackBuilder;
 
-  //edm::ESHandle<Propagator>&& m_propagator;
-
+  float residual_x_cut;
+    
   //edm::ParameterSet & muon_service_parameter{};
   MuonServiceProxy *muon_service;
 

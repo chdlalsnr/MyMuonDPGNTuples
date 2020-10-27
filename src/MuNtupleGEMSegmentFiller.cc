@@ -40,9 +40,9 @@ void MuNtupleGEMSegmentFiller::initialize()
   m_tree->Branch((m_label + "_dirLoc_y").c_str(), &m_seg_dirLoc_y);
   m_tree->Branch((m_label + "_dirLoc_z").c_str(), &m_seg_dirLoc_z);
 
-  /*m_tree->Branch((m_label + "_posLoc_x_SL1").c_str(), &m_seg_posLoc_x_SL1);
-  m_tree->Branch((m_label + "_posLoc_x_SL3").c_str(), &m_seg_posLoc_x_SL3);
-  m_tree->Branch((m_label + "_posLoc_x_midPlane").c_str(), &m_seg_posLoc_x_midPlane);*/
+  m_tree->Branch((m_label + "_posGlb_x").c_str(), &m_seg_posGlb_x);
+  m_tree->Branch((m_label + "_posGlb_y").c_str(), &m_seg_posGlb_y);
+  m_tree->Branch((m_label + "_posGlb_z").c_str(), &m_seg_posGlb_z);
 
   m_tree->Branch((m_label + "_time").c_str(), &m_seg_time);
   m_tree->Branch((m_label + "_time_err").c_str(), &m_seg_time_err);
@@ -75,9 +75,9 @@ void MuNtupleGEMSegmentFiller::clear()
   m_seg_dirLoc_y.clear();
   m_seg_dirLoc_z.clear();
   
-  /* m_seg_posLoc_x_SL1.clear();
-  m_seg_posLoc_x_SL3.clear();
-  m_seg_posLoc_x_midPlane.clear();*/
+  m_seg_posGlb_x.clear();
+  m_seg_posGlb_y.clear();
+  m_seg_posGlb_z.clear();
   
   m_seg_time.clear();
   m_seg_time_err.clear();
@@ -135,6 +135,9 @@ void MuNtupleGEMSegmentFiller::fill(const edm::Event & ev)
 	      auto posGlb = geomDet->toGlobal(pos);
 	      auto dirGlb = geomDet->toGlobal(dir);
 	      
+	      m_seg_posGlb_x.push_back(posGlb.x());
+	      m_seg_posGlb_y.push_back(posGlb.y());
+	      m_seg_posGlb_z.push_back(posGlb.z());
 	      m_seg_posGlb_phi.push_back(posGlb.phi());
 	      m_seg_posGlb_eta.push_back(posGlb.eta());
 

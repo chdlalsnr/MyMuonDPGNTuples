@@ -1,6 +1,6 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Mon Sep  7 19:24:24 2020 by ROOT version 6.22/00
+// Tue Oct 13 11:45:56 2020 by ROOT version 6.22/02
 // from TTree MuDPGTree/Mu DPG Tree
 // found on file: MuDPGNtuple_11_1_2_patch2.root
 //////////////////////////////////////////////////////////
@@ -11,24 +11,36 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
+#include <TH1.h>
+#include <TString.h>
+#include <TTree.h>
+#include <iostream>
 
 // Header file for the classes stored in the TTree if any.
 #include "vector"
 #include "vector"
 #include "TClonesArray.h"
+#include "vector"
+#include "vector"
+#include "vector"
+
+
 
 class gemAnalysis {
 public :
-  
-  gemAnalysis(const TString & inFileName,
-	      const TString & outFileName);
-  
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
 
-// Fixed size dimensions of array or collections stored in the TTree if any.
+   gemAnalysis(const TString & inFileName,
+               const TString & outFileName);
+   
+   // Fixed size dimensions of array or collections stored in the TTree if any.
 
    // Declaration of leaf types
+
+   Int_t           event_runNumber;
+   Int_t           event_lumiBlock;
+   Long64_t        event_eventNumber;
    UInt_t          dtDigi_nDigis;
    vector<short>   *dtDigi_wheel;
    vector<short>   *dtDigi_sector;
@@ -153,11 +165,52 @@ public :
    vector<float>   *gemDigi_g_y;
    vector<float>   *gemDigi_g_z;
    UInt_t          gemRecHit_nRecHits;
+   vector<int>     *gemRecHit_cluster_size;
    vector<float>   *gemRecHit_g_r;
    vector<float>   *gemRecHit_g_phi;
    vector<float>   *gemRecHit_g_x;
    vector<float>   *gemRecHit_g_y;
    vector<float>   *gemRecHit_g_z;
+   UInt_t          gemSegment_nSegments;
+   vector<short>   *gemSegment_region;
+   vector<short>   *gemSegment_ring;
+   vector<short>   *gemSegment_station;
+   vector<float>   *gemSegment_posLoc_x;
+   vector<float>   *gemSegment_posLoc_y;
+   vector<float>   *gemSegment_posLoc_z;
+   vector<float>   *gemSegment_dirLoc_x;
+   vector<float>   *gemSegment_dirLoc_y;
+   vector<float>   *gemSegment_dirLoc_z;
+   vector<float>   *gemSegment_posGlb_x;
+   vector<float>   *gemSegment_posGlb_y;
+   vector<float>   *gemSegment_posGlb_z;
+   vector<float>   *gemSegment_time;
+   vector<float>   *gemSegment_time_err;
+   vector<double>  *gemSegment_chi2;
+   vector<float>   *gemSegment_posGlb_phi;
+   vector<float>   *gemSegment_posGlb_eta;
+   vector<float>   *gemSegment_dirGlb_phi;
+   vector<float>   *gemSegment_dirGlb_eta;
+   UInt_t          mu_nMuons;
+   vector<float>   *mu_pt;
+   vector<float>   *mu_phi;
+   vector<float>   *mu_eta;
+   vector<short>   *mu_charge;
+   vector<bool>    *mu_isGlobal;
+   vector<bool>    *mu_isStandalone;
+   vector<bool>    *mu_isTracker;
+   vector<bool>    *mu_isGEM;
+   vector<bool>    *mu_isLoose;
+   vector<bool>    *mu_isMedium;
+   vector<bool>    *mu_isTight;
+   vector<float>   *mu_propagatedLoc_x;
+   vector<float>   *mu_propagatedLoc_y;
+   vector<float>   *mu_propagatedLoc_z;
+   vector<float>   *mu_propagatedLoc_r;
+   vector<float>   *mu_propagatedGlb_x;
+   vector<float>   *mu_propagatedGlb_y;
+   vector<float>   *mu_propagatedGlb_z;
+   vector<float>   *mu_propagatedGlb_r;
 
    // List of branches
    TBranch        *b_dtDigi_nDigis;   //!
@@ -284,11 +337,52 @@ public :
    TBranch        *b_gemDigi_g_y;   //!
    TBranch        *b_gemDigi_g_z;   //!
    TBranch        *b_gemRecHit_nRecHits;   //!
+   TBranch        *b_gemRecHit_cluster_size;   //!
    TBranch        *b_gemRecHit_g_r;   //!
    TBranch        *b_gemRecHit_g_phi;   //!
    TBranch        *b_gemRecHit_g_x;   //!
    TBranch        *b_gemRecHit_g_y;   //!
    TBranch        *b_gemRecHit_g_z;   //!
+   TBranch        *b_gemSegment_nSegments;   //!
+   TBranch        *b_gemSegment_region;   //!
+   TBranch        *b_gemSegment_ring;   //!
+   TBranch        *b_gemSegment_station;   //!
+   TBranch        *b_gemSegment_posLoc_x;   //!
+   TBranch        *b_gemSegment_posLoc_y;   //!
+   TBranch        *b_gemSegment_posLoc_z;   //!
+   TBranch        *b_gemSegment_dirLoc_x;   //!
+   TBranch        *b_gemSegment_dirLoc_y;   //!
+   TBranch        *b_gemSegment_dirLoc_z;   //!
+   TBranch        *b_gemSegment_posGlb_x;   //!
+   TBranch        *b_gemSegment_posGlb_y;   //!
+   TBranch        *b_gemSegment_posGlb_z;   //!
+   TBranch        *b_gemSegment_time;   //!
+   TBranch        *b_gemSegment_time_err;   //!
+   TBranch        *b_gemSegment_chi2;   //!
+   TBranch        *b_gemSegment_posGlb_phi;   //!
+   TBranch        *b_gemSegment_posGlb_eta;   //!
+   TBranch        *b_gemSegment_dirGlb_phi;   //!
+   TBranch        *b_gemSegment_dirGlb_eta;   //!
+   TBranch        *b_mu_nMuons;   //!
+   TBranch        *b_mu_pt;   //!
+   TBranch        *b_mu_phi;   //!
+   TBranch        *b_mu_eta;   //!
+   TBranch        *b_mu_charge;   //!
+   TBranch        *b_mu_isGlobal;   //!
+   TBranch        *b_mu_isStandalone;   //!
+   TBranch        *b_mu_isTracker;   //!
+   TBranch        *b_mu_isGEM;   //!
+   TBranch        *b_mu_isLoose;   //!
+   TBranch        *b_mu_isMedium;   //!
+   TBranch        *b_mu_isTight;   //!
+   TBranch        *b_mu_propagatedLoc_x;   //!
+   TBranch        *b_mu_propagatedLoc_y;   //!
+   TBranch        *b_mu_propagatedLoc_z;   //!
+   TBranch        *b_mu_propagatedLoc_r;   //!
+   TBranch        *b_mu_propagatedGlb_x;   //!
+   TBranch        *b_mu_propagatedGlb_y;   //!
+   TBranch        *b_mu_propagatedGlb_z;   //!
+   TBranch        *b_mu_propagatedGlb_r;   //!
 
    gemAnalysis(TTree *tree=0);
    virtual ~gemAnalysis();
@@ -299,18 +393,20 @@ public :
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
-   
+
  protected:
 
-   void virtual book();
-   void virtual fill();
-   void virtual endJob();
-
-   TFile m_outFile;
    TFile m_inFile;
+   TFile m_outFile;
 
    std::map<std::string, TH1*> m_plots;
 
+   virtual vector<float> findMatchedHit(vector<float> *recHitPositions, size_t nRecHitPos, vector<float> *muPropagatedPositions, size_t nMuPropagatedPos);
+   virtual vector<float> residual(vector<float> *recHitPositions, size_t nRecHitPos, vector<float> *muPropagatedPositions, size_t nMuPropagatedPos);
+   virtual void book();
+   virtual void fill_matched(vector<float> position, size_t nSize);
+   virtual void fill_residual(vector<float> position, size_t nSize);
+   virtual void endJob();
 
 };
 
@@ -487,11 +583,50 @@ void gemAnalysis::Init(TTree *tree)
    gemDigi_g_x = 0;
    gemDigi_g_y = 0;
    gemDigi_g_z = 0;
+   gemRecHit_cluster_size = 0;
    gemRecHit_g_r = 0;
    gemRecHit_g_phi = 0;
    gemRecHit_g_x = 0;
    gemRecHit_g_y = 0;
    gemRecHit_g_z = 0;
+   gemSegment_region = 0;
+   gemSegment_ring = 0;
+   gemSegment_station = 0;
+   gemSegment_posLoc_x = 0;
+   gemSegment_posLoc_y = 0;
+   gemSegment_posLoc_z = 0;
+   gemSegment_dirLoc_x = 0;
+   gemSegment_dirLoc_y = 0;
+   gemSegment_dirLoc_z = 0;
+   gemSegment_posGlb_x = 0;
+   gemSegment_posGlb_y = 0;
+   gemSegment_posGlb_z = 0;
+   gemSegment_time = 0;
+   gemSegment_time_err = 0;
+   gemSegment_chi2 = 0;
+   gemSegment_posGlb_phi = 0;
+   gemSegment_posGlb_eta = 0;
+   gemSegment_dirGlb_phi = 0;
+   gemSegment_dirGlb_eta = 0;
+   mu_pt = 0;
+   mu_phi = 0;
+   mu_eta = 0;
+   mu_charge = 0;
+   mu_isGlobal = 0;
+   mu_isStandalone = 0;
+   mu_isTracker = 0;
+   mu_isGEM = 0;
+   mu_isLoose = 0;
+   mu_isMedium = 0;
+   mu_isTight = 0;
+   mu_propagatedLoc_x = 0;
+   mu_propagatedLoc_y = 0;
+   mu_propagatedLoc_z = 0;
+   mu_propagatedLoc_r = 0;
+   mu_propagatedGlb_x = 0;
+   mu_propagatedGlb_y = 0;
+   mu_propagatedGlb_z = 0;
+   mu_propagatedGlb_r = 0;
    // Set branch addresses and branch pointers
    if (!tree) return;
    fChain = tree;
@@ -622,11 +757,52 @@ void gemAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("gemDigi_g_y", &gemDigi_g_y, &b_gemDigi_g_y);
    fChain->SetBranchAddress("gemDigi_g_z", &gemDigi_g_z, &b_gemDigi_g_z);
    fChain->SetBranchAddress("gemRecHit_nRecHits", &gemRecHit_nRecHits, &b_gemRecHit_nRecHits);
+   fChain->SetBranchAddress("gemRecHit_cluster_size", &gemRecHit_cluster_size, &b_gemRecHit_cluster_size);
    fChain->SetBranchAddress("gemRecHit_g_r", &gemRecHit_g_r, &b_gemRecHit_g_r);
    fChain->SetBranchAddress("gemRecHit_g_phi", &gemRecHit_g_phi, &b_gemRecHit_g_phi);
    fChain->SetBranchAddress("gemRecHit_g_x", &gemRecHit_g_x, &b_gemRecHit_g_x);
    fChain->SetBranchAddress("gemRecHit_g_y", &gemRecHit_g_y, &b_gemRecHit_g_y);
    fChain->SetBranchAddress("gemRecHit_g_z", &gemRecHit_g_z, &b_gemRecHit_g_z);
+   fChain->SetBranchAddress("gemSegment_nSegments", &gemSegment_nSegments, &b_gemSegment_nSegments);
+   fChain->SetBranchAddress("gemSegment_region", &gemSegment_region, &b_gemSegment_region);
+   fChain->SetBranchAddress("gemSegment_ring", &gemSegment_ring, &b_gemSegment_ring);
+   fChain->SetBranchAddress("gemSegment_station", &gemSegment_station, &b_gemSegment_station);
+   fChain->SetBranchAddress("gemSegment_posLoc_x", &gemSegment_posLoc_x, &b_gemSegment_posLoc_x);
+   fChain->SetBranchAddress("gemSegment_posLoc_y", &gemSegment_posLoc_y, &b_gemSegment_posLoc_y);
+   fChain->SetBranchAddress("gemSegment_posLoc_z", &gemSegment_posLoc_z, &b_gemSegment_posLoc_z);
+   fChain->SetBranchAddress("gemSegment_dirLoc_x", &gemSegment_dirLoc_x, &b_gemSegment_dirLoc_x);
+   fChain->SetBranchAddress("gemSegment_dirLoc_y", &gemSegment_dirLoc_y, &b_gemSegment_dirLoc_y);
+   fChain->SetBranchAddress("gemSegment_dirLoc_z", &gemSegment_dirLoc_z, &b_gemSegment_dirLoc_z);
+   fChain->SetBranchAddress("gemSegment_posGlb_x", &gemSegment_posGlb_x, &b_gemSegment_posGlb_x);
+   fChain->SetBranchAddress("gemSegment_posGlb_y", &gemSegment_posGlb_y, &b_gemSegment_posGlb_y);
+   fChain->SetBranchAddress("gemSegment_posGlb_z", &gemSegment_posGlb_z, &b_gemSegment_posGlb_z);
+   fChain->SetBranchAddress("gemSegment_time", &gemSegment_time, &b_gemSegment_time);
+   fChain->SetBranchAddress("gemSegment_time_err", &gemSegment_time_err, &b_gemSegment_time_err);
+   fChain->SetBranchAddress("gemSegment_chi2", &gemSegment_chi2, &b_gemSegment_chi2);
+   fChain->SetBranchAddress("gemSegment_posGlb_phi", &gemSegment_posGlb_phi, &b_gemSegment_posGlb_phi);
+   fChain->SetBranchAddress("gemSegment_posGlb_eta", &gemSegment_posGlb_eta, &b_gemSegment_posGlb_eta);
+   fChain->SetBranchAddress("gemSegment_dirGlb_phi", &gemSegment_dirGlb_phi, &b_gemSegment_dirGlb_phi);
+   fChain->SetBranchAddress("gemSegment_dirGlb_eta", &gemSegment_dirGlb_eta, &b_gemSegment_dirGlb_eta);
+   fChain->SetBranchAddress("mu_nMuons", &mu_nMuons, &b_mu_nMuons);
+   fChain->SetBranchAddress("mu_pt", &mu_pt, &b_mu_pt);
+   fChain->SetBranchAddress("mu_phi", &mu_phi, &b_mu_phi);
+   fChain->SetBranchAddress("mu_eta", &mu_eta, &b_mu_eta);
+   fChain->SetBranchAddress("mu_charge", &mu_charge, &b_mu_charge);
+   fChain->SetBranchAddress("mu_isGlobal", &mu_isGlobal, &b_mu_isGlobal);
+   fChain->SetBranchAddress("mu_isStandalone", &mu_isStandalone, &b_mu_isStandalone);
+   fChain->SetBranchAddress("mu_isTracker", &mu_isTracker, &b_mu_isTracker);
+   fChain->SetBranchAddress("mu_isGEM", &mu_isGEM, &b_mu_isGEM);
+   fChain->SetBranchAddress("mu_isLoose", &mu_isLoose, &b_mu_isLoose);
+   fChain->SetBranchAddress("mu_isMedium", &mu_isMedium, &b_mu_isMedium);
+   fChain->SetBranchAddress("mu_isTight", &mu_isTight, &b_mu_isTight);
+   fChain->SetBranchAddress("mu_propagatedLoc_x", &mu_propagatedLoc_x, &b_mu_propagatedLoc_x);
+   fChain->SetBranchAddress("mu_propagatedLoc_y", &mu_propagatedLoc_y, &b_mu_propagatedLoc_y);
+   fChain->SetBranchAddress("mu_propagatedLoc_z", &mu_propagatedLoc_z, &b_mu_propagatedLoc_z);
+   fChain->SetBranchAddress("mu_propagatedLoc_r", &mu_propagatedLoc_r, &b_mu_propagatedLoc_r);
+   fChain->SetBranchAddress("mu_propagatedGlb_x", &mu_propagatedGlb_x, &b_mu_propagatedGlb_x);
+   fChain->SetBranchAddress("mu_propagatedGlb_y", &mu_propagatedGlb_y, &b_mu_propagatedGlb_y);
+   fChain->SetBranchAddress("mu_propagatedGlb_z", &mu_propagatedGlb_z, &b_mu_propagatedGlb_z);
+   fChain->SetBranchAddress("mu_propagatedGlb_r", &mu_propagatedGlb_r, &b_mu_propagatedGlb_r);
    Notify();
 }
 
