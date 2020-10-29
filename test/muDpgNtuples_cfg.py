@@ -17,7 +17,8 @@ options.register('globalTag',
                  "Global Tag")
 
 options.register('nEvents',
-                 -1, #default value
+                 1000, #to run on a sub-sample
+                 #-1, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.int,
                  "Maximum number of processed events")
@@ -69,9 +70,12 @@ process.source = cms.Source("PoolSource",
         secondaryFileNames = cms.untracked.vstring()
 
 )
-
-files = subprocess.check_output(["ls", options.inputFolder])
-process.source.fileNames = ["file://" + options.inputFolder + "/" + f for f in files.split()]
+if "eos/cms" in options.inputFolder:
+    files = subprocess.check_output(['xrdfs', 'root://eoscms.cern.ch', 'ls', options.inputFolder])
+    process.source.fileNames = ["root://eoscms.cern.ch//" + f for f in files.split()]
+else:
+    files = subprocess.check_output(['ls', options.inputFolder])
+    process.source.fileNames = ["file://" + options.inputFolder + "/" + f for f in files.split()]
 
 if options.secondaryInputFolder != "" :
     files = subprocess.check_output(["ls", options.secondaryInputFolder])
