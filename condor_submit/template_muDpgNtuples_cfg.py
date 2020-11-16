@@ -17,7 +17,7 @@ options.register('globalTag',
                  "Global Tag")
 
 options.register('nEvents',
-                 10, #-1, #default value
+                 -1, #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.int,
                  "Maximum number of processed events")
