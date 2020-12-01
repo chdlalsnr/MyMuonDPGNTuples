@@ -9,7 +9,7 @@ cmsrel CMSSW_11_1_4
 cd CMSSW_11_1_4/src/
 cmsenv
 
-git clone https://github.com/gmilella12/MyMuonDPGNTuples.git
+git clone https://github.com/gmilella12/MyMuonDPGNTuples.git MuDPGAnalysis/MuonDPGNtuples
 
 scram b -j 5
 
