@@ -1,6 +1,6 @@
 # MuonDPGNtuples
 
-Repository to host common ntuples developed and maintained by the CMS muon DPGs.
+ Preliminary version of the GE11 ntuples, developed as a part of the CMS Muon DPGO common ntuples: https://gitlab.cern.ch/cms-muon-dpgo/muondpgntuples
 
 ## Install and run the ntuples:
 
