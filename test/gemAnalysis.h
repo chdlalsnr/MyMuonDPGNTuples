@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Tue Oct 13 11:45:56 2020 by ROOT version 6.22/02
+// Mon Nov 30 12:04:11 2020 by ROOT version 6.20/07
 // from TTree MuDPGTree/Mu DPG Tree
-// found on file: MuDPGNtuple_11_1_2_patch2.root
+// found on file: MuDPGNTuple_MWGR5_EXP_run338714prova.root
 //////////////////////////////////////////////////////////
 
 #ifndef gemAnalysis_h
@@ -24,20 +24,16 @@
 #include "vector"
 #include "vector"
 
-
-
 class gemAnalysis {
 public :
    TTree          *fChain;   //!pointer to the analyzed TTree or TChain
    Int_t           fCurrent; //!current Tree number in a TChain
 
+// Fixed size dimensions of array or collections stored in the TTree if any.
    gemAnalysis(const TString & inFileName,
                const TString & outFileName);
-   
-   // Fixed size dimensions of array or collections stored in the TTree if any.
 
    // Declaration of leaf types
-
    Int_t           event_runNumber;
    Int_t           event_lumiBlock;
    Long64_t        event_eventNumber;
@@ -166,6 +162,16 @@ public :
    vector<float>   *gemDigi_g_z;
    UInt_t          gemRecHit_nRecHits;
    vector<int>     *gemRecHit_cluster_size;
+   vector<int>     *gemRecHit_bx;
+   vector<int>     *gemRecHit_region;
+   vector<int>     *gemRecHit_chamber;
+   vector<int>     *gemRecHit_layer;
+   vector<int>     *gemRecHit_etaPartition;
+   vector<float>   *gemRecHit_loc_r;
+   vector<float>   *gemRecHit_loc_phi;
+   vector<float>   *gemRecHit_loc_x;
+   vector<float>   *gemRecHit_loc_y;
+   vector<float>   *gemRecHit_loc_z;
    vector<float>   *gemRecHit_g_r;
    vector<float>   *gemRecHit_g_phi;
    vector<float>   *gemRecHit_g_x;
@@ -203,6 +209,11 @@ public :
    vector<bool>    *mu_isLoose;
    vector<bool>    *mu_isMedium;
    vector<bool>    *mu_isTight;
+   Float_t         mu_path_length;
+   vector<int>     *mu_propagated_region;
+   vector<int>     *mu_propagated_layer;
+   vector<int>     *mu_propagated_chamber;
+   vector<int>     *mu_propagated_eta;
    vector<float>   *mu_propagatedLoc_x;
    vector<float>   *mu_propagatedLoc_y;
    vector<float>   *mu_propagatedLoc_z;
@@ -213,6 +224,9 @@ public :
    vector<float>   *mu_propagatedGlb_r;
 
    // List of branches
+   TBranch        *b_event_runNumber;   //!
+   TBranch        *b_event_lumiBlock;   //!
+   TBranch        *b_event_eventNumber;   //!
    TBranch        *b_dtDigi_nDigis;   //!
    TBranch        *b_dtDigi_wheel;   //!
    TBranch        *b_dtDigi_sector;   //!
@@ -338,6 +352,16 @@ public :
    TBranch        *b_gemDigi_g_z;   //!
    TBranch        *b_gemRecHit_nRecHits;   //!
    TBranch        *b_gemRecHit_cluster_size;   //!
+   TBranch        *b_gemRecHit_bx;   //!
+   TBranch        *b_gemRecHit_region;   //!
+   TBranch        *b_gemRecHit_chamber;   //!
+   TBranch        *b_gemRecHit_layer;   //!
+   TBranch        *b_gemRecHit_etaPartition;   //!
+   TBranch        *b_gemRecHit_loc_r;   //!
+   TBranch        *b_gemRecHit_loc_phi;   //!
+   TBranch        *b_gemRecHit_loc_x;   //!
+   TBranch        *b_gemRecHit_loc_y;   //!
+   TBranch        *b_gemRecHit_loc_z;   //!
    TBranch        *b_gemRecHit_g_r;   //!
    TBranch        *b_gemRecHit_g_phi;   //!
    TBranch        *b_gemRecHit_g_x;   //!
@@ -375,6 +399,11 @@ public :
    TBranch        *b_mu_isLoose;   //!
    TBranch        *b_mu_isMedium;   //!
    TBranch        *b_mu_isTight;   //!
+   TBranch        *b_mu_path_length;   //!
+   TBranch        *b_mu_propagated_region;   //!
+   TBranch        *b_mu_propagated_layer;   //!
+   TBranch        *b_mu_propagated_chamber;   //!
+   TBranch        *b_mu_propagated_eta;   //!
    TBranch        *b_mu_propagatedLoc_x;   //!
    TBranch        *b_mu_propagatedLoc_y;   //!
    TBranch        *b_mu_propagatedLoc_z;   //!
@@ -395,18 +424,21 @@ public :
    virtual void     Show(Long64_t entry = -1);
 
  protected:
-
+   
    TFile m_inFile;
    TFile m_outFile;
 
+   TString runNumber;
+   
    std::map<std::string, TH1*> m_plots;
 
-   virtual vector<float> findMatchedHit(vector<float> *recHitPositions, size_t nRecHitPos, vector<float> *muPropagatedPositions, size_t nMuPropagatedPos);
-   virtual vector<float> residual(vector<float> *recHitPositions, size_t nRecHitPos, vector<float> *muPropagatedPositions, size_t nMuPropagatedPos);
+   virtual vector<float> findMatchedHit(vector<float> *recHitPositions_x, vector<float> *recHitPositions_y, vector<float> *muPropagatedPositions_x, vector<float> *muPropagatedPositions_y, int coord, vector<int> *recHit_region, vector<float> *muPropagatedPositions_z);
+   virtual vector<float> findLocalMatchedHit(vector<float> *recHitPositions, vector<float> *muPropagatedPositions, vector<int> *recHit_region, vector<float> *muPropagatedPositions_z);
+   virtual vector<float> residual(vector<float> *recHitPositions, vector<float> *muPropagatedPositions, vector<int> *recHit_region, vector<float> *muPropagatedPositions_z);
+   virtual vector<float> residual2D(vector<float> *recHitPositions_x, vector<float> *recHitPositions_y, vector<float> *muPropagatedPositions_x, vector<float> *muPropagatedPositions_y);
    virtual void book();
-   virtual void fill_matched(vector<float> position, size_t nSize);
-   virtual void fill_residual(vector<float> position, size_t nSize);
    virtual void endJob();
+
 
 };
 
@@ -418,11 +450,11 @@ gemAnalysis::gemAnalysis(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("MuDPGNtuple_11_1_2_patch2.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("MuDPGNTuple_MWGR5_EXP_run338714prova.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("MuDPGNtuple_11_1_2_patch2.root");
+         f = new TFile("MuDPGNTuple_MWGR5_EXP_run338714prova.root");
       }
-      TDirectory * dir = (TDirectory*)f->Get("MuDPGNtuple_11_1_2_patch2.root:/muNtupleProducer");
+      TDirectory * dir = (TDirectory*)f->Get("MuDPGNTuple_MWGR5_EXP_run338714prova.root:/muNtupleProducer");
       dir->GetObject("MuDPGTree",tree);
 
    }
@@ -584,6 +616,16 @@ void gemAnalysis::Init(TTree *tree)
    gemDigi_g_y = 0;
    gemDigi_g_z = 0;
    gemRecHit_cluster_size = 0;
+   gemRecHit_bx = 0;
+   gemRecHit_region = 0;
+   gemRecHit_chamber = 0;
+   gemRecHit_layer = 0;
+   gemRecHit_etaPartition = 0;
+   gemRecHit_loc_r = 0;
+   gemRecHit_loc_phi = 0;
+   gemRecHit_loc_x = 0;
+   gemRecHit_loc_y = 0;
+   gemRecHit_loc_z = 0;
    gemRecHit_g_r = 0;
    gemRecHit_g_phi = 0;
    gemRecHit_g_x = 0;
@@ -619,6 +661,10 @@ void gemAnalysis::Init(TTree *tree)
    mu_isLoose = 0;
    mu_isMedium = 0;
    mu_isTight = 0;
+   mu_propagated_region = 0;
+   mu_propagated_layer = 0;
+   mu_propagated_chamber = 0;
+   mu_propagated_eta = 0;
    mu_propagatedLoc_x = 0;
    mu_propagatedLoc_y = 0;
    mu_propagatedLoc_z = 0;
@@ -633,6 +679,9 @@ void gemAnalysis::Init(TTree *tree)
    fCurrent = -1;
    fChain->SetMakeClass(1);
 
+   fChain->SetBranchAddress("event_runNumber", &event_runNumber, &b_event_runNumber);
+   fChain->SetBranchAddress("event_lumiBlock", &event_lumiBlock, &b_event_lumiBlock);
+   fChain->SetBranchAddress("event_eventNumber", &event_eventNumber, &b_event_eventNumber);
    fChain->SetBranchAddress("dtDigi_nDigis", &dtDigi_nDigis, &b_dtDigi_nDigis);
    fChain->SetBranchAddress("dtDigi_wheel", &dtDigi_wheel, &b_dtDigi_wheel);
    fChain->SetBranchAddress("dtDigi_sector", &dtDigi_sector, &b_dtDigi_sector);
@@ -758,6 +807,16 @@ void gemAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("gemDigi_g_z", &gemDigi_g_z, &b_gemDigi_g_z);
    fChain->SetBranchAddress("gemRecHit_nRecHits", &gemRecHit_nRecHits, &b_gemRecHit_nRecHits);
    fChain->SetBranchAddress("gemRecHit_cluster_size", &gemRecHit_cluster_size, &b_gemRecHit_cluster_size);
+   fChain->SetBranchAddress("gemRecHit_bx", &gemRecHit_bx, &b_gemRecHit_bx);
+   fChain->SetBranchAddress("gemRecHit_region", &gemRecHit_region, &b_gemRecHit_region);
+   fChain->SetBranchAddress("gemRecHit_chamber", &gemRecHit_chamber, &b_gemRecHit_chamber);
+   fChain->SetBranchAddress("gemRecHit_layer", &gemRecHit_layer, &b_gemRecHit_layer);
+   fChain->SetBranchAddress("gemRecHit_etaPartition", &gemRecHit_etaPartition, &b_gemRecHit_etaPartition);
+   fChain->SetBranchAddress("gemRecHit_loc_r", &gemRecHit_loc_r, &b_gemRecHit_loc_r);
+   fChain->SetBranchAddress("gemRecHit_loc_phi", &gemRecHit_loc_phi, &b_gemRecHit_loc_phi);
+   fChain->SetBranchAddress("gemRecHit_loc_x", &gemRecHit_loc_x, &b_gemRecHit_loc_x);
+   fChain->SetBranchAddress("gemRecHit_loc_y", &gemRecHit_loc_y, &b_gemRecHit_loc_y);
+   fChain->SetBranchAddress("gemRecHit_loc_z", &gemRecHit_loc_z, &b_gemRecHit_loc_z);
    fChain->SetBranchAddress("gemRecHit_g_r", &gemRecHit_g_r, &b_gemRecHit_g_r);
    fChain->SetBranchAddress("gemRecHit_g_phi", &gemRecHit_g_phi, &b_gemRecHit_g_phi);
    fChain->SetBranchAddress("gemRecHit_g_x", &gemRecHit_g_x, &b_gemRecHit_g_x);
@@ -795,6 +854,11 @@ void gemAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("mu_isLoose", &mu_isLoose, &b_mu_isLoose);
    fChain->SetBranchAddress("mu_isMedium", &mu_isMedium, &b_mu_isMedium);
    fChain->SetBranchAddress("mu_isTight", &mu_isTight, &b_mu_isTight);
+   fChain->SetBranchAddress("mu_path_length", &mu_path_length, &b_mu_path_length);
+   fChain->SetBranchAddress("mu_propagated_region", &mu_propagated_region, &b_mu_propagated_region);
+   fChain->SetBranchAddress("mu_propagated_layer", &mu_propagated_layer, &b_mu_propagated_layer);
+   fChain->SetBranchAddress("mu_propagated_chamber", &mu_propagated_chamber, &b_mu_propagated_chamber);
+   fChain->SetBranchAddress("mu_propagated_eta", &mu_propagated_eta, &b_mu_propagated_eta);
    fChain->SetBranchAddress("mu_propagatedLoc_x", &mu_propagatedLoc_x, &b_mu_propagatedLoc_x);
    fChain->SetBranchAddress("mu_propagatedLoc_y", &mu_propagatedLoc_y, &b_mu_propagatedLoc_y);
    fChain->SetBranchAddress("mu_propagatedLoc_z", &mu_propagatedLoc_z, &b_mu_propagatedLoc_z);

@@ -20,8 +20,10 @@
 #include "DataFormats/HLTReco/interface/TriggerObject.h"
 
 #include <vector>
+#include <fstream>
 #include "TClonesArray.h"
 #include "TVectorF.h"
+#include "TFile.h"
 
 class MuNtupleGEMMuonFiller : public MuNtupleTrackBaseFiller
 {
@@ -56,12 +58,15 @@ class MuNtupleGEMMuonFiller : public MuNtupleTrackBaseFiller
   edm::EDGetTokenT<trigger::TriggerEvent> m_trigEventToken;
 
   const GEMRecHit *findMatchedHit(const float,  const GEMRecHitCollection::range );
+  const GEMEtaPartition*  findEtaPartition(const GEMChamber*, const GlobalPoint&);
 
   const TrackingRecHit *getHitPtr(edm::OwnVector<TrackingRecHit>::const_iterator iter) const {return &*iter; }
   const TrackingRecHit *getHitPtr(const trackingRecHit_iterator &iter) const {return &**iter; }
 
   TVectorF m_nullVecF;
 
+  std::fstream outdata;
+  
   unsigned int m_nMuons; 
 
   std::vector<float> m_pt;     // muon pT [GeV/c]
@@ -74,10 +79,24 @@ class MuNtupleGEMMuonFiller : public MuNtupleTrackBaseFiller
   std::vector<bool>  m_isTracker;
   //std::vector<bool>  m_isTrackerArb;
   std::vector<bool>  m_isGEM;
+  
+  std::vector<bool> m_isME11;
 
   std::vector<bool>  m_isLoose;  // Loose muon ID
   std::vector<bool>  m_isMedium; // Medium muon ID
   std::vector<bool>  m_isTight;  // Tight muon ID
+
+  float m_path_length;
+
+  std::vector<int> m_propagated_region;
+  std::vector<int> m_propagated_layer;
+  std::vector<int> m_propagated_chamber;
+  std::vector<int> m_propagated_etaP;
+
+  std::vector<float> m_propagated_pt;
+  std::vector<float> m_propagated_phi;
+  std::vector<float> m_propagated_eta;
+  std::vector<float> m_propagated_charge;
 
   std::vector<float> m_propagatedLoc_x;
   std::vector<float> m_propagatedLoc_y;
