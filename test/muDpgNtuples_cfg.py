@@ -11,7 +11,6 @@ options = VarParsing.VarParsing()
 options.register('globalTag',
                  '111X_dataRun3_Express_v4',
                  #'110X_mcRun3_2021_realistic_v9',
-                 #'auto:phase1_2021_realistic',
                  #'111X_upgrade2018_realistic_v1', #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
@@ -25,17 +24,7 @@ options.register('nEvents',
                  "Maximum number of processed events")
 
 options.register('inputFolder',
-                 'root_file',
-                 #'/store/express/Commissioning2020/ExpressCosmics/FEVT/Express-v1/000/337/973',
-                 #'/lustre/cms/store/user/fsimone/Commissioning2020_ExpressCosmics_FEVT_DExpress-v1_337973',
-                 #'/afs/cern.ch/user/f/fsimone/public/Gabriele/',
-                 #'Run3Summer19GS-step2.root',
-                 #'/lustre/cms/store/user/gmilella/Run3Summer19GS-step0/CRAB3_MC_ZMuMu_RECO/201111_170703/0000',
-                 #'/store/data/Commissioning2020/Cosmics/RAW-RECO/CosmicSP-PromptReco-v1/000/337/973/00000/',
-                 #'/store/data/Commissioning2020/Cosmics/RAW-RECO/CosmicTP-PromptReco-v1/000/337/973/00000/',
-                 #'/eos/cms/store/express/Commissioning2020/ExpressCosmics/FEVT/Express-v1/000/337/973/00000/',
-                 #'/afs/cern.ch/work/r/rosma/public/DTNtuples/MyCosmicProduction/',
-                 #'/afs/cern.ch/user/g/gmilella/CMSSW_11_2_0_pre2/src/DTNtuples/MyCosmicProduction/',
+                 '/store/express/Commissioning2020/ExpressCosmics/FEVT/Express-v1/000/337/973',
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
                  "EOS folder with input files")
@@ -47,9 +36,7 @@ options.register('secondaryInputFolder',
                  "EOS folder with input files for secondary files")
 
 options.register('ntupleName',
-                 #'./MuDPGNtuple_11_1_2_patch2.root',
                  'MuDPGNTuple_MWGR5_EXP_run338714.root',
-                 #'/lustre/cms/store/user/gmilella/Cosmics/CONDOR_gem_dpg_ntuple_mwgr4_run337973_eos/MuDPGNtuple_MWGR4eos.root',
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
                  "Folder and name ame for output ntuple")
