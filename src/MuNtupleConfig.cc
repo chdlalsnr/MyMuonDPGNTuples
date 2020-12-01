@@ -76,7 +76,6 @@ void MuNtupleConfig::getES(const edm::EventSetup & environment)
   environment.get<MuonGeometryRecord>().get(m_dtGeometry);
   environment.get<GlobalTrackingGeometryRecord>().get(m_trackingGeometry);
   environment.get<MuonGeometryRecord>().get(m_gemGeometry);
-
   environment.get<TransientTrackRecord>().get("TransientTrackBuilder", m_transientTrackBuilder);
   
   //muon_service->update(environment);
