@@ -93,8 +93,13 @@ void MuNtupleGEMMuonFiller::initialize()
   m_tree->Branch((m_label + "_isMedium").c_str(), &m_isMedium);
   m_tree->Branch((m_label + "_isTight").c_str(), &m_isTight);
 
+  m_tree->Branch((m_label + "_isME11").c_str(), &m_isME11);
+
   m_tree->Branch((m_label + "_path_length").c_str(), &m_path_length);
 
+  m_tree->Branch((m_label + "_isinsideout").c_str(), &m_isinsideout);
+  m_tree->Branch((m_label + "_isincoming").c_str(), &m_isincoming);
+    
   m_tree->Branch((m_label + "_propagated_region").c_str(), &m_propagated_region);
   m_tree->Branch((m_label + "_propagated_layer").c_str(), &m_propagated_layer);
   m_tree->Branch((m_label + "_propagated_chamber").c_str(), &m_propagated_chamber);
@@ -131,13 +136,17 @@ void MuNtupleGEMMuonFiller::clear()
   m_isTracker.clear();
   //m_isTrackerArb.clear();
   m_isGEM.clear();
-
+  m_isME11.clear();
+  
   m_isLoose.clear();
   m_isMedium.clear();
   m_isTight.clear();
 
   m_path_length = 0;
   
+  m_isinsideout.clear();
+  m_isincoming.clear();
+    
   m_propagated_region.clear();
   m_propagated_layer.clear();
   m_propagated_chamber.clear();
@@ -180,6 +189,12 @@ void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetu
   }
  
   m_config->muon_service->update(environment);
+
+  edm::ESHandle<Propagator>&& propagator_any = m_config->muon_service->propagator("SteppingHelixPropagatorAny");
+  if (not propagator_any.isValid()) {
+    std::cout<< "Any Propagator is invalid" << std::endl;
+    return;
+  }
   
   edm::ESHandle<Propagator>&& propagator_along = m_config->muon_service->propagator("SteppingHelixPropagatorAlong");
   if (not propagator_along.isValid()) {
@@ -239,8 +254,8 @@ void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetu
 		continue;
 	      }
 
-	      float p2_out = track->innerMomentum().mag2();
-	      float p2_in = track->outerMomentum().mag2();
+	      float p2_in = track->innerMomentum().mag2();
+	      float p2_out = track->outerMomentum().mag2();
 	      float pos_out = track->outerPosition().mag2();
 	      float pos_in = track->innerPosition().mag2();
 
@@ -270,7 +285,8 @@ void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetu
 
 	      const auto&& start_state = is_insideout ? transient_track.outermostMeasurementState() : transient_track.innermostMeasurementState();
 	      auto& propagator = is_incoming ? propagator_along : propagator_opposite;
-	      
+	      //std::cout << "insideout  after swap" << is_insideout  << std::endl;
+
 	      auto recHitMu = outerTrackRef->recHitsBegin();
 	      auto recHitMuEnd = outerTrackRef->recHitsEnd();
 	      	
@@ -314,25 +330,8 @@ void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetu
 			//outdata << "opposite region?" << is_opposite_region << std::endl;
 			if (is_incoming xor is_opposite_region)
 			  {
-			    /*std::cout << "xor condition valid" << std::endl;
-			      std::cout << "coming" << is_incoming << std::endl;
-			      std::cout << "muon eta" << muon.eta() << std::endl;
-			      std::cout <<  "region " << gem_region->region() << std::endl;
-			      outdata << "xor condition valid" << std::endl;
-			      outdata << "coming" << is_incoming << std::endl;
-			      outdata << "muon eta" << muon.eta() << std::endl;
-			      outdata << "region " << gem_region->region() << std::endl;
-			      std::cout << "different endcaps " << std::endl;*/
 			    continue;
 			  }
-			/*std::cout << "if opposite xor incoming not valid" << std::endl;
-			  std::cout << "coming" << is_incoming << std::endl;
-			  std::cout << "muon eta" << muon.eta() << std::endl;
-			  std::cout << "region " << gem_region->region() << std::endl;
-			  outdata << "if opposite xor incoming not valid" << std::endl;
-			  outdata << "coming" << is_incoming << std::endl;
-			  outdata << "muon eta" << muon.eta() << std::endl;
-			  outdata << "region " << gem_region->region() << std::endl;*/
 			
 			
 			for (const GEMStation* station : gem_region->stations()) {
@@ -341,22 +340,20 @@ void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetu
 			      
 			      //const BoundPlane& bound_plane = eta_partition->surface();
 			      const BoundPlane& bound_plane = chamber->surface();
-			      
-			      /*const TrajectoryStateOnSurface&& tsos =
-				propagator->propagate(transient_track.outermostMeasurementState(), bound_plane);
-				if (not tsos.isValid()) {
+			      			      
+			      /*const TrajectoryStateOnSurface&& tsos = propagator_any->propagate(transient_track.outermostMeasurementState(), bound_plane);
+			      if (not tsos.isValid()) {
 				std::cout << "failed to propagate" << std::endl;
 				continue;
-				}*/
+			      }*/
 			      
 			      const auto& dest_state = propagator->propagate(start_state, bound_plane);
 			      if (not dest_state.isValid())
 				{
-				  //outdata << "no propagation" << std::endl;
-				  //std::cout << "failed to propagate" << std::endl;
+				  std::cout << "failed to propagate" << std::endl;
 				  continue;
 				}
-			      
+			      				    
 			      //outdata << "propagation" << std::endl;
 			
 			      m_propagated_pt.push_back(muon.pt());
@@ -365,7 +362,10 @@ void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetu
 			      m_propagated_charge.push_back(muon.charge());
 
 			      const GlobalPoint&& dest_global_pos = dest_state.globalPosition();
-			      			      
+
+			      //std::cout << "inside_out" << is_insideout << std::endl;
+			      //std::cout << "glb x" << dest_global_pos.x() << std::endl;
+			      
 			      m_propagatedGlb_x.push_back(dest_global_pos.x());
 			      m_propagatedGlb_y.push_back(dest_global_pos.y());
 			      m_propagatedGlb_y.push_back(dest_global_pos.y());
@@ -385,6 +385,9 @@ void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetu
 			      m_propagated_chamber.push_back(gem_id.chamber());
 			      m_propagated_etaP.push_back(gem_id.roll());
 			      //const auto rechit_range = rechit_collection->get(gem_id);
+			      
+			      m_isinsideout.push_back(is_insideout);
+                              m_isincoming.push_back(is_incoming);
 			      
 			      //const LocalPoint&& tsos_local_pos = tsos.localPosition();
 			      //const GlobalPoint&& tsos_global_pos = tsos.globalPosition();
