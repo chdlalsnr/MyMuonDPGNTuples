@@ -93,7 +93,7 @@ void MuNtupleGEMMuonFiller::initialize()
   m_tree->Branch((m_label + "_isMedium").c_str(), &m_isMedium);
   m_tree->Branch((m_label + "_isTight").c_str(), &m_isTight);
 
-  m_tree->Branch((m_label + "_isME11").c_str(), &m_isME11);
+  m_tree->Branch((m_label + "_isME11").c_str(), &m_propagatedisME11);
 
   m_tree->Branch((m_label + "_path_length").c_str(), &m_path_length);
 
@@ -119,6 +119,7 @@ void MuNtupleGEMMuonFiller::initialize()
   m_tree->Branch((m_label + "_propagatedGlb_z").c_str(), &m_propagatedGlb_z);
   m_tree->Branch((m_label + "_propagatedGlb_r").c_str(), &m_propagatedGlb_r);
 
+
 }
 
 void MuNtupleGEMMuonFiller::clear()
@@ -136,7 +137,7 @@ void MuNtupleGEMMuonFiller::clear()
   m_isTracker.clear();
   //m_isTrackerArb.clear();
   m_isGEM.clear();
-  m_isME11.clear();
+  m_propagatedisME11.clear();
   
   m_isLoose.clear();
   m_isMedium.clear();
@@ -165,7 +166,26 @@ void MuNtupleGEMMuonFiller::clear()
   m_propagatedGlb_y.clear();
   m_propagatedGlb_z.clear();
   m_propagatedGlb_r.clear();
+  
+  /* m_propagatedME11_region.clear();
+  m_propagatedME11_layer.clear();
+  m_propagatedME11_chamber.clear();
+  m_propagatedME11_etaP.clear();
 
+  m_propagatedME11_pt.clear();
+  m_propagatedME11_phi.clear();
+  m_propagatedME11_eta.clear();
+  m_propagatedME11_charge.clear();
+
+  m_propagatedLocME11_x.clear();
+  m_propagatedLocME11_y.clear();
+  m_propagatedLocME11_z.clear();
+  m_propagatedLocME11_r.clear();
+  m_propagatedGlbME11_x.clear();
+  m_propagatedGlbME11_y.clear();
+  m_propagatedGlbME11_z.clear();
+  m_propagatedGlbME11_r.clear();*/
+  
 }
 
 void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetup & environment)
@@ -314,12 +334,12 @@ void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetu
 		      
 		      //if(cscSegmentSta->cscDetId().station() == 1 && cscSegmentSta->cscDetId().ring() == 1)
 		      
-		      bool isME11 = cscRecHitSta->cscDetId().station() == 1 && cscRecHitSta->cscDetId().ring() == 1;
-		      if(isME11)
-			{
-			  m_isME11.push_back(isME11);
-			  outdata << "if me11" << std::endl;
-			}
+		      //bool isME11 = cscRecHitSta->cscDetId().station() == 1 && cscRecHitSta->cscDetId().ring() == 1;
+		      //if(isME11)
+		      //{
+		      //  m_isME11.push_back(isME11);
+		      //	  outdata << "if me11" << std::endl;
+		      //	}
 	     		
 	      
 		      for (const GEMRegion* gem_region : gem->regions()) {
@@ -355,49 +375,58 @@ void MuNtupleGEMMuonFiller::fill_new(const edm::Event & ev, const edm::EventSetu
 				}
 			      				    
 			      //outdata << "propagation" << std::endl;
-			
-			      m_propagated_pt.push_back(muon.pt());
-			      m_propagated_phi.push_back(muon.phi());
-			      m_propagated_eta.push_back(muon.eta());
-			      m_propagated_charge.push_back(muon.charge());
-
+						      
 			      const GlobalPoint&& dest_global_pos = dest_state.globalPosition();
+			      /*const GlobalPoint&& global_pos(dest_global_pos.x(),dest_global_pos.y(),0);
 
+			      m_propagatedGlb_x.push_back(global_pos.x());
+                              m_propagatedGlb_y.push_back(global_pos.y());
+                              m_propagatedGlb_y.push_back(global_pos.y());
+                              m_propagatedGlb_z.push_back(global_pos.z());
+                              m_propagatedGlb_r.push_back(global_pos.perp());*/
 			      //std::cout << "inside_out" << is_insideout << std::endl;
 			      //std::cout << "glb x" << dest_global_pos.x() << std::endl;
-			      
-			      m_propagatedGlb_x.push_back(dest_global_pos.x());
-			      m_propagatedGlb_y.push_back(dest_global_pos.y());
-			      m_propagatedGlb_y.push_back(dest_global_pos.y());
-			      m_propagatedGlb_z.push_back(dest_global_pos.z());
-			      m_propagatedGlb_r.push_back(dest_global_pos.perp());
+
 			      
 			      const GEMEtaPartition* eta_partition = findEtaPartition(chamber, dest_global_pos);
 			      if (eta_partition == nullptr) {
 				std::cout << "failed to find GEMEtaPartition" << std::endl; 
 				continue;
 			      }
-			      
+
 			      const GEMDetId&& gem_id = eta_partition->id();
-			      
-			      m_propagated_region.push_back(gem_id.region());
-			      m_propagated_layer.push_back(gem_id.layer());
-			      m_propagated_chamber.push_back(gem_id.chamber());
-			      m_propagated_etaP.push_back(gem_id.roll());
-			      //const auto rechit_range = rechit_collection->get(gem_id);
-			      
-			      m_isinsideout.push_back(is_insideout);
-                              m_isincoming.push_back(is_incoming);
-			      
+			     
+			      bool isME11 = cscRecHitSta->cscDetId().station() == 1 && cscRecHitSta->cscDetId().ring() == 1;
+			      m_propagatedisME11.push_back(isME11);
+                              			      
 			      //const LocalPoint&& tsos_local_pos = tsos.localPosition();
 			      //const GlobalPoint&& tsos_global_pos = tsos.globalPosition();
 			      //const LocalPoint&& dest_local_pos = dest_state.localPosition();
 			      const LocalPoint&& dest_local_pos = eta_partition->toLocal(dest_global_pos);
 			      
+			      m_propagatedGlb_x.push_back(dest_global_pos.x());
+			      m_propagatedGlb_y.push_back(dest_global_pos.y());
+                              m_propagatedGlb_z.push_back(dest_global_pos.z());
+                              m_propagatedGlb_r.push_back(dest_global_pos.perp());
+			      
+			      m_propagated_pt.push_back(muon.pt());
+                              m_propagated_phi.push_back(muon.phi());
+                              m_propagated_eta.push_back(muon.eta());
+                              m_propagated_charge.push_back(muon.charge());
+
 			      m_propagatedLoc_x.push_back(dest_local_pos.x());
 			      m_propagatedLoc_y.push_back(dest_local_pos.y());
 			      m_propagatedLoc_z.push_back(dest_local_pos.z());
 			      m_propagatedLoc_r.push_back(dest_local_pos.perp());
+			    
+			      m_propagated_region.push_back(gem_id.region());
+                              m_propagated_layer.push_back(gem_id.layer());
+                              m_propagated_chamber.push_back(gem_id.chamber());
+                              m_propagated_etaP.push_back(gem_id.roll());
+
+			      m_isinsideout.push_back(is_insideout);
+                              m_isincoming.push_back(is_incoming);
+
 			    }  
 			  }
 			}   

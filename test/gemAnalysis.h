@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Mon Nov 30 12:04:11 2020 by ROOT version 6.20/07
+// Mon Dec  7 14:29:11 2020 by ROOT version 6.20/07
 // from TTree MuDPGTree/Mu DPG Tree
-// found on file: MuDPGNTuple_MWGR5_EXP_run338714prova.root
+// found on file: MuDPGNTuple_MWGR5_EXP_run338714_nuovo.root
 //////////////////////////////////////////////////////////
 
 #ifndef gemAnalysis_h
@@ -11,10 +11,6 @@
 #include <TROOT.h>
 #include <TChain.h>
 #include <TFile.h>
-#include <TH1.h>
-#include <TString.h>
-#include <TTree.h>
-#include <iostream>
 
 // Header file for the classes stored in the TTree if any.
 #include "vector"
@@ -32,6 +28,7 @@ public :
 // Fixed size dimensions of array or collections stored in the TTree if any.
    gemAnalysis(const TString & inFileName,
                const TString & outFileName);
+
 
    // Declaration of leaf types
    Int_t           event_runNumber;
@@ -209,11 +206,18 @@ public :
    vector<bool>    *mu_isLoose;
    vector<bool>    *mu_isMedium;
    vector<bool>    *mu_isTight;
+   vector<bool>    *mu_isME11;
    Float_t         mu_path_length;
+   vector<bool>    *mu_isinsideout;
+   vector<bool>    *mu_isincoming;
    vector<int>     *mu_propagated_region;
    vector<int>     *mu_propagated_layer;
    vector<int>     *mu_propagated_chamber;
-   vector<int>     *mu_propagated_eta;
+   vector<int>     *mu_propagated_etaP;
+   vector<float>   *mu_propagated_pt;
+   vector<float>   *mu_propagated_phi;
+   vector<float>   *mu_propagated_eta;
+   vector<float>   *mu_propagated_charge;
    vector<float>   *mu_propagatedLoc_x;
    vector<float>   *mu_propagatedLoc_y;
    vector<float>   *mu_propagatedLoc_z;
@@ -399,11 +403,18 @@ public :
    TBranch        *b_mu_isLoose;   //!
    TBranch        *b_mu_isMedium;   //!
    TBranch        *b_mu_isTight;   //!
+   TBranch        *b_mu_isME11;   //!
    TBranch        *b_mu_path_length;   //!
+   TBranch        *b_mu_isinsideout;   //!
+   TBranch        *b_mu_isincoming;   //!
    TBranch        *b_mu_propagated_region;   //!
    TBranch        *b_mu_propagated_layer;   //!
    TBranch        *b_mu_propagated_chamber;   //!
+   TBranch        *b_mu_propagated_etaP;   //!
+   TBranch        *b_mu_propagated_pt;   //!
+   TBranch        *b_mu_propagated_phi;   //!
    TBranch        *b_mu_propagated_eta;   //!
+   TBranch        *b_mu_propagated_charge;   //!
    TBranch        *b_mu_propagatedLoc_x;   //!
    TBranch        *b_mu_propagatedLoc_y;   //!
    TBranch        *b_mu_propagatedLoc_z;   //!
@@ -424,22 +435,22 @@ public :
    virtual void     Show(Long64_t entry = -1);
 
  protected:
-   
+
    TFile m_inFile;
    TFile m_outFile;
 
    TString runNumber;
-   
+
    std::map<std::string, TH1*> m_plots;
 
-   virtual vector<float> findMatchedHit(vector<float> *recHitPositions_x, vector<float> *recHitPositions_y, vector<float> *muPropagatedPositions_x, vector<float> *muPropagatedPositions_y, int coord, vector<int> *recHit_region, vector<float> *muPropagatedPositions_z);
-   virtual vector<float> findLocalMatchedHit(vector<float> *recHitPositions, vector<float> *muPropagatedPositions, vector<int> *recHit_region, vector<float> *muPropagatedPositions_z);
-   virtual vector<float> residual(vector<float> *recHitPositions, vector<float> *muPropagatedPositions, vector<int> *recHit_region, vector<float> *muPropagatedPositions_z);
+   void findMatchedHit(vector<float> *recHitPositions_x, vector<float> *recHitPositions_y, vector<float> *muPropagatedPositions_x, vector<float> *muPropagatedPositions_y, vector<int> *recHitregion, vector<int> *muPropagatedRegion, vector<float> *muPt, vector<float> *muEta, vector<int> *recHitlayer, vector<int> *recHitchamber, vector<int> *muLayer, vector<int> *muChamber,vector<bool> *muME11);
+   void findLocalMatchedHit(vector<float> *recHitPositions, vector<float> *muPropagatedPositions, vector<int> *recHitregion, vector<int> *muPropagatedRegion, vector<float> *muPt, vector<float> *muEta, vector<int> *recHitlayer, vector<int> *recHitchamber, vector<int> *muLayer, vector<int> *muChamber , vector<int> *recHitEta, vector<int> *muPropagatedEta,  vector<bool> *isME11);
+   void residual(vector<float> *recHitPositions, vector<float> *muPropagatedPositions, vector<int> *recHitregion, vector<int> *muPropagatedRegion, vector<int> *recHitlayer, vector<int> *recHitchamber);
    virtual vector<float> residual2D(vector<float> *recHitPositions_x, vector<float> *recHitPositions_y, vector<float> *muPropagatedPositions_x, vector<float> *muPropagatedPositions_y);
    virtual void book();
    virtual void endJob();
 
-
+   
 };
 
 #endif
@@ -450,11 +461,11 @@ gemAnalysis::gemAnalysis(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("MuDPGNTuple_MWGR5_EXP_run338714prova.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("MuDPGNTuple_MWGR5_EXP_run338714_nuovo.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("MuDPGNTuple_MWGR5_EXP_run338714prova.root");
+         f = new TFile("MuDPGNTuple_MWGR5_EXP_run338714_nuovo.root");
       }
-      TDirectory * dir = (TDirectory*)f->Get("MuDPGNTuple_MWGR5_EXP_run338714prova.root:/muNtupleProducer");
+      TDirectory * dir = (TDirectory*)f->Get("MuDPGNTuple_MWGR5_EXP_run338714_nuovo.root:/muNtupleProducer");
       dir->GetObject("MuDPGTree",tree);
 
    }
@@ -661,10 +672,17 @@ void gemAnalysis::Init(TTree *tree)
    mu_isLoose = 0;
    mu_isMedium = 0;
    mu_isTight = 0;
+   mu_isME11 = 0;
+   mu_isinsideout = 0;
+   mu_isincoming = 0;
    mu_propagated_region = 0;
    mu_propagated_layer = 0;
    mu_propagated_chamber = 0;
+   mu_propagated_etaP = 0;
+   mu_propagated_pt = 0;
+   mu_propagated_phi = 0;
    mu_propagated_eta = 0;
+   mu_propagated_charge = 0;
    mu_propagatedLoc_x = 0;
    mu_propagatedLoc_y = 0;
    mu_propagatedLoc_z = 0;
@@ -854,11 +872,18 @@ void gemAnalysis::Init(TTree *tree)
    fChain->SetBranchAddress("mu_isLoose", &mu_isLoose, &b_mu_isLoose);
    fChain->SetBranchAddress("mu_isMedium", &mu_isMedium, &b_mu_isMedium);
    fChain->SetBranchAddress("mu_isTight", &mu_isTight, &b_mu_isTight);
+   fChain->SetBranchAddress("mu_isME11", &mu_isME11, &b_mu_isME11);
    fChain->SetBranchAddress("mu_path_length", &mu_path_length, &b_mu_path_length);
+   fChain->SetBranchAddress("mu_isinsideout", &mu_isinsideout, &b_mu_isinsideout);
+   fChain->SetBranchAddress("mu_isincoming", &mu_isincoming, &b_mu_isincoming);
    fChain->SetBranchAddress("mu_propagated_region", &mu_propagated_region, &b_mu_propagated_region);
    fChain->SetBranchAddress("mu_propagated_layer", &mu_propagated_layer, &b_mu_propagated_layer);
    fChain->SetBranchAddress("mu_propagated_chamber", &mu_propagated_chamber, &b_mu_propagated_chamber);
+   fChain->SetBranchAddress("mu_propagated_etaP", &mu_propagated_etaP, &b_mu_propagated_etaP);
+   fChain->SetBranchAddress("mu_propagated_pt", &mu_propagated_pt, &b_mu_propagated_pt);
+   fChain->SetBranchAddress("mu_propagated_phi", &mu_propagated_phi, &b_mu_propagated_phi);
    fChain->SetBranchAddress("mu_propagated_eta", &mu_propagated_eta, &b_mu_propagated_eta);
+   fChain->SetBranchAddress("mu_propagated_charge", &mu_propagated_charge, &b_mu_propagated_charge);
    fChain->SetBranchAddress("mu_propagatedLoc_x", &mu_propagatedLoc_x, &b_mu_propagatedLoc_x);
    fChain->SetBranchAddress("mu_propagatedLoc_y", &mu_propagatedLoc_y, &b_mu_propagatedLoc_y);
    fChain->SetBranchAddress("mu_propagatedLoc_z", &mu_propagatedLoc_z, &b_mu_propagatedLoc_z);
