@@ -6,7 +6,6 @@
  *
  *
  */
-
 #include "MuDPGAnalysis/MuonDPGNtuples/plugins/MuNtupleProducer.h"
 
 #include "FWCore/Utilities/interface/InputTag.h"
