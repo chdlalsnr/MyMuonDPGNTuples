@@ -111,30 +111,25 @@ void MuNtupleGEMRecHitFiller::fill(const edm::Event & ev)
 	    m_rechit_loc_r.push_back(rechit->localPosition().perp());
             m_rechit_loc_phi.push_back(rechit->localPosition().phi());
             m_rechit_loc_x.push_back(rechit->localPosition().x());
-            m_rechit_loc_y.push_back(rechit->localPosition().y());
-            m_rechit_loc_z.push_back(rechit->localPosition().z());
+            //m_rechit_loc_y.push_back(rechit->localPosition().y());
+            //m_rechit_loc_z.push_back(rechit->localPosition().z());
 
 	    m_rechit_g_r.push_back(rechit_global_pos.perp());
 	    m_rechit_g_phi.push_back(rechit_global_pos.phi());
 	    m_rechit_g_x.push_back(rechit_global_pos.x());
 	    m_rechit_g_y.push_back(rechit_global_pos.y());
 	    m_rechit_g_z.push_back(rechit_global_pos.z());
-
-	    //std::cout << "rec_x" << rechit->localPosition().x() << std::endl;
-	    //std::cout << "rec_y" << rechit->localPosition().y() << std::endl;
 	    
 	    auto cluster_size = rechit->clusterSize();
 	    int bx = rechit->BunchX();
 	    
 	    m_rechit_cluster_size.push_back(cluster_size);
 	    m_rechit_bx.push_back(bx);
-	    //std::cout << " cluster size: " << cluster_size << std::endl;
+	    
 
 	    m_nRecHits++;
 	  }
-	//std::cout << " # rechits: " << m_nRecHits << std::endl;
-
-      }
+    }
 
   return;
 
