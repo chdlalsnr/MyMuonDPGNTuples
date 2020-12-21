@@ -94,8 +94,7 @@ void MuNtupleProducer::beginRun(const edm::Run & run, const edm::EventSetup & en
 {
 
   m_config->getES(run, environment);
-    //m_config->muon_service->update(environment);
-  //std::cout << "ciao2" << std::endl;
+
 }
 
 void MuNtupleProducer::endJob() 
