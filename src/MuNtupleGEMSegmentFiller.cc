@@ -54,9 +54,6 @@ void MuNtupleGEMSegmentFiller::initialize()
   m_tree->Branch((m_label + "_dirGlb_phi").c_str(), &m_seg_dirGlb_phi);
   m_tree->Branch((m_label + "_dirGlb_eta").c_str(), &m_seg_dirGlb_eta);
   
-  /*m_tree->Branch((m_label + "_hitsExpPos").c_str(),     &m_seg_hitsExpPos,     2048000,0);
-  m_tree->Branch((m_label + "_hitsExpPosCh").c_str(),   &m_seg_hitsExpPosCh,   2048000,0);
-  m_tree->Branch((m_label + "_hitsExpWire").c_str(),    &m_seg_hitsExpWire,    2048000,0);*/
 
 }
 
@@ -88,9 +85,6 @@ void MuNtupleGEMSegmentFiller::clear()
   m_seg_dirGlb_phi.clear();
   m_seg_dirGlb_eta.clear();
 
-  /*m_seg_hitsExpPos->Clear();
-  m_seg_hitsExpPosCh->Clear();
-  m_seg_hitsExpWire->Clear();*/
   
 }
 
@@ -106,8 +100,6 @@ void MuNtupleGEMSegmentFiller::fill(const edm::Event & ev)
       
       for(auto range_iter = segments->id_begin(); range_iter != segments->id_end(); range_iter++)
 	{
-	  //const GEMDetId& gem_id = (*range_iter).first;
-	  //const auto GEMSegmentCollection::Range& range = (*range_iter).second;
 	  const auto range = segments->get(*range_iter);
 
 	  for(auto segment = range.first; segment != range.second; ++segment)

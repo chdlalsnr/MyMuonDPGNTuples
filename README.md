@@ -21,7 +21,7 @@ cmsRun muDpgNtuples_cfg.py
 
 These ntuples are intended to consist mostly of flat collection of `std::vectors<>`, with the exception for few `TClonesArrays` which handle "vectors of vectors".
 
-The class steering ntuple production is called `MuNtupleProducer`. It runs a list of helper classes, called _fillers_ inheriting from `MuNtupleBaseFiller`.
+The class steering ntuple production is called `MuNtupleProducer`. It runs a list of helper classes, called _fillers_ inheriting from `MuNtupleBaseFiller` or from `MuNtupleTrackBaseFiller`.
 
 Each _filler_ must include the `initialize()`, `clear()` and `fill()` functions, which are called within the `MuNtupleProducer` `beginJob()` and `analyze()` functions to perform the ntuple filling logic.
 
@@ -59,6 +59,7 @@ The configuration of the ntuple producer is available under `python/muNtupleProd
 - a _filler_ .h file is the best place where to document the quantities that are filled (e.g. mention units, ranges, etc), look [`src/ MuNtupleDTDigiFiller.h`]() as an example;
 - the `MuNtupleBaseFiller` class includes placeholders for default values in the ntuple (e.g. `DEFAULT_INT_VAL`), please use those (and not "magic" numbers) when filling with default values is needed;
 - the `MuNtupleBaseFiller` class includes a `conditionalGet()` function that provides a default dump in case a collection is missing in the input file, please use it.
+- the `MuNtupleTrackBaseFiller` class includes, in addition, also information on the event setup.  
 
 A complete example showing how to include phase-1 and phase-2 DT digis is available [here]().
 
