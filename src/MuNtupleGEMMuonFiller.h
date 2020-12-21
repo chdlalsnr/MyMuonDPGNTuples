@@ -113,30 +113,12 @@ class MuNtupleGEMMuonFiller : public MuNtupleTrackBaseFiller
   std::vector<float> m_propagatedLoc_y;
   std::vector<float> m_propagatedLoc_z;
   std::vector<float> m_propagatedLoc_r;
+  std::vector<float> m_propagatedLoc_phi;
   std::vector<float> m_propagatedGlb_x;
   std::vector<float> m_propagatedGlb_y;
   std::vector<float> m_propagatedGlb_z;
   std::vector<float> m_propagatedGlb_r;
-
-  std::vector<int> m_propagatedME11_region;
-  std::vector<int> m_propagatedME11_layer;
-  std::vector<int> m_propagatedME11_chamber;
-  std::vector<int> m_propagatedME11_etaP;
-
-  std::vector<float> m_propagatedME11_pt;
-  std::vector<float> m_propagatedME11_phi;
-  std::vector<float> m_propagatedME11_eta;
-  std::vector<float> m_propagatedME11_charge;
-
-  std::vector<float> m_propagatedLocME11_x;
-  std::vector<float> m_propagatedLocME11_y;
-  std::vector<float> m_propagatedLocME11_z;
-  std::vector<float> m_propagatedLocME11_r;
-  std::vector<float> m_propagatedGlbME11_x;
-  std::vector<float> m_propagatedGlbME11_y;
-  std::vector<float> m_propagatedGlbME11_z;
-  std::vector<float> m_propagatedGlbME11_r;
-
+  std::vector<float> m_propagatedGlb_phi;
   
 };
 
