@@ -10,7 +10,6 @@ options = VarParsing.VarParsing()
 
 options.register('globalTag',
                  '111X_dataRun3_Express_v4',
-                 #'110X_mcRun3_2021_realistic_v9',
                  #'111X_upgrade2018_realistic_v1', #default value
                  VarParsing.VarParsing.multiplicity.singleton,
                  VarParsing.VarParsing.varType.string,
