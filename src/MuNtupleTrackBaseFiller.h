@@ -1,9 +1,12 @@
 #ifndef MuNtuple_MuNtupleTrackBaseFiller_h
 #define MuNtuple_MuNtupleTrackBaseFiller_h
 
-/** \class MuNtupleBaseFiller MuNtupleBaseFiller.h MuDPGAnalysis/MuonDPGNtuples/src/MuNtupleBaseFiller.h
+/**
  *  
- * Helper class defining the generic interface of a filler
+ *
+ * Helper class developed by G. Milella on the basis of the BaseFiller developed by C. Battilana.
+ *The difference wrt to the BaseFiller is in the the method fill_new that allow to access also to the eventSetup variables 
+ *(while the fill() method in the BaseFiller just allow access to the Event)
  *
  * \author C. Battilana (INFN BO)
  *
