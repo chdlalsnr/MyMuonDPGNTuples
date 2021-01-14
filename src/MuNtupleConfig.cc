@@ -76,12 +76,8 @@ void MuNtupleConfig::getES(const edm::EventSetup & environment)
   environment.get<MuonGeometryRecord>().get(m_dtGeometry);
   environment.get<GlobalTrackingGeometryRecord>().get(m_trackingGeometry);
   environment.get<MuonGeometryRecord>().get(m_gemGeometry);
-
   environment.get<TransientTrackRecord>().get("TransientTrackBuilder", m_transientTrackBuilder);
-  
-  //muon_service->update(environment);
-  //m_propagator = muon_service->propagator("SteppingHelixPropagatorAny");
-    
+     
  }
 
 void MuNtupleConfig::getES(const edm::Run &run, const edm::EventSetup & environment) 
@@ -90,13 +86,5 @@ void MuNtupleConfig::getES(const edm::Run &run, const edm::EventSetup & environm
   getES(environment);
 
 }
-
-/*edm::EventSetup MuNtupleConfig::passES()
-{
-
-  edm::EventSetup & environment;
-  return environment;
-
-  }*/
 
 

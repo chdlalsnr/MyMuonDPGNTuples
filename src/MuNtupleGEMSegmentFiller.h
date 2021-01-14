@@ -76,20 +76,6 @@ class MuNtupleGEMSegmentFiller : public MuNtupleBaseFiller
   std::vector<float> m_seg_time_err;
   std::vector<double> m_seg_chi2;
 
-  /* 
-// TClones arrays index is layer [0:3] = SL phi 1 [4:7] = SL theta [8:11] = SL phi 2
-  TClonesArray *m_seg4D_hitsExpPos;     // expected position of segment extrapolated
-  // to a given layer in layer local coordinates
-  // (float, local layer x coordinates, cm)
-  TClonesArray *m_seg4D_hitsExpPosCh;   // expected position of segment extrapolated
-  // to a given layer in chamber local coordinates
-  // (float, local chamber x/y coordinates, cm)
-  TClonesArray *m_seg4D_hitsExpWire;    // expected wire crossed by segment extrapolated
-  // to a given layer (int, range depends on chamber size)
-
-  std::vector<float> m_seg2D_phi_t0;       // t0 from segments with phi view (float in ns)
-  std::vector<float> m_seg2D_phi_vDrift;   // v_drift from segments with phi view (float CB relativa a DB?)
-  std::vector<float> m_seg2D_phi_normChi2; // chi2/n.d.o.f. from segments with phi view (float)*/
 
 };
 

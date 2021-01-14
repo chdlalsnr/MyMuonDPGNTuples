@@ -76,29 +76,21 @@ void MuNtupleGEMDigiFiller::fill(const edm::Event & ev)
 
   if (gemDigis.isValid())
     {
-      int Ndigi_inRoll=0;
-
       for (auto range_iter = gemDigis->begin(); range_iter != gemDigis->end(); range_iter++) \
 	{
-	  Ndigi_inRoll++;
-	  //      std::cout<<"Ndigi_inRoll="<<Ndigi_inRoll<<endl;
 	  const GEMDetId& gem_id = (*range_iter).first;
 	  const GEMDigiCollection::Range& range = (*range_iter).second;
 
 	  const GEMEtaPartition* roll = gem->etaPartition(gem_id);
 	  const BoundPlane& surface = roll->surface();
 
-	  int Ndigi=0;
-	  //const MEMapKey1 det_key{gem_id.region(), gem_id.station()};
 	  for (auto digi = range.first; digi != range.second; ++digi) {
-	    Ndigi++;
-	    //std::cout<<" station="<<gem_id.station()<<" gem roll="<<gem_id.roll()<<" region="<< \
-		//gem_id.region()<<" digi  strip="<<digi->strip()<<" bx="<<digi->bx()<<std::endl;
+
 	    m_digi_station.push_back(gem_id.station());
 	    m_digi_roll.push_back(gem_id.roll());
 	    m_digi_strip.push_back(digi->strip());
 	    m_digi_bx.push_back(digi->bx());
-	    //m_digi_pad.push_back(digi->pad());
+
 	    m_digi_region.push_back(gem_id.region());
 
 	    const LocalPoint& local_pos = roll->centreOfStrip(digi->strip());
